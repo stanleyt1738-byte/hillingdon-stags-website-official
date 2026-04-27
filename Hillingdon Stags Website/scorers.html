@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Top Scorers & MOTM — Hillingdon Stags FC</title>
+  <link rel="icon" type="image/svg+xml" href="assets/badge.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main>
+  <section class="section">
+    <div class="container">
+      <div class="section-title"><h2>Top Scorers</h2></div>
+      <p class="muted">Golden Boot race &mdash; 2025/26.</p>
+      <div id="scorers" class="mt-1"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-title"><h2>Man of the Match</h2></div>
+      <p class="muted">Most MOTM awards this season.</p>
+      <div id="motm" class="mt-1"></div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="js/main.js"></script>
+<script>
+document.addEventListener("stags:ready", async () => {
+  const data = await loadJSON("data/scorers.json");
+  if (data) {
+    renderScorers(document.getElementById("scorers"), data, "scorers", "Goals");
+    renderScorers(document.getElementById("motm"), data, "motm", "Awards");
+  }
+});
+</script>
+
+</body>
+</html>

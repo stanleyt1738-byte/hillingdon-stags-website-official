@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 230" role="img" aria-label="Hillingdon Stags FC badge">
+  <title>Hillingdon Stags FC</title>
+  <defs>
+    <clipPath id="shield-clip">
+      <path d="M10,10 L190,10 L190,130 Q190,220 100,220 Q10,220 10,130 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- Shield outer border -->
+  <path d="M10,10 L190,10 L190,130 Q190,220 100,220 Q10,220 10,130 Z"
+        fill="#FFFFFF" stroke="#1A1A1A" stroke-width="10" stroke-linejoin="round"/>
+
+  <!-- Inner content clipped to shield -->
+  <g clip-path="url(#shield-clip)">
+
+    <!-- Hills behind stag -->
+    <path d="M-10,170 Q35,110 65,150 Q100,110 135,150 Q170,110 220,170 L220,230 L-10,230 Z"
+          fill="#F5B82E"/>
+
+    <!-- HILLINGDON text -->
+    <text x="100" y="50" text-anchor="middle"
+          font-family="Georgia, 'Times New Roman', serif"
+          font-weight="900" font-size="22"
+          fill="#1A1A1A" letter-spacing="1">HILLINGDON</text>
+
+    <!-- STAGS text -->
+    <text x="100" y="88" text-anchor="middle"
+          font-family="Georgia, 'Times New Roman', serif"
+          font-weight="900" font-size="40"
+          fill="#F5B82E" letter-spacing="2">STAGS</text>
+
+    <!-- Antlers (left) -->
+    <path d="M70,135 L70,108 L62,108 L62,98 M70,118 L60,118 L60,110
+             M70,128 L55,128 L55,120 M70,138 L52,138 L52,130"
+          stroke="#1A1A1A" stroke-width="6" fill="none" stroke-linecap="square" stroke-linejoin="miter"/>
+
+    <!-- Antlers (right) -->
+    <path d="M130,135 L130,108 L138,108 L138,98 M130,118 L140,118 L140,110
+             M130,128 L145,128 L145,120 M130,138 L148,138 L148,130"
+          stroke="#1A1A1A" stroke-width="6" fill="none" stroke-linecap="square" stroke-linejoin="miter"/>
+
+    <!-- Stag head silhouette -->
+    <path d="M100,130 L92,142 L108,142 Z" fill="#F5B82E"/>
+    <ellipse cx="100" cy="170" rx="22" ry="28" fill="#1A1A1A" stroke="#FFFFFF" stroke-width="3"/>
+    <path d="M82,160 Q78,175 84,188 L116,188 Q122,175 118,160 Q100,148 82,160 Z"
+          fill="#1A1A1A" stroke="#FFFFFF" stroke-width="3"/>
+    <!-- Snout -->
+    <path d="M88,180 Q100,195 112,180 L112,192 Q100,200 88,192 Z"
+          fill="#1A1A1A" stroke="#FFFFFF" stroke-width="2"/>
+    <!-- Ears -->
+    <path d="M76,158 L70,150 L78,162 Z" fill="#1A1A1A"/>
+    <path d="M124,158 L130,150 L122,162 Z" fill="#1A1A1A"/>
+
+  </g>
+</svg>

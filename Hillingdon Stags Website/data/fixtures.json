@@ -1,0 +1,22 @@
+{
+  "lastUpdated": "2026-04-27",
+  "source": "https://www.mitoofootball.com/TeamHist.cfm?CI=4870&DivisionID=220&TblName=Matches&LeagueCode=MDXS2025",
+  "fixtures": [
+    {
+      "date": "2026-05-03",
+      "kickoff": "10:30",
+      "home": "Ryefield",
+      "away": "Hillingdon Stags",
+      "venue": "TBC",
+      "competition": "League"
+    },
+    {
+      "date": "2026-05-10",
+      "kickoff": "10:30",
+      "home": "Hillingdon Stags",
+      "away": "Dar United",
+      "venue": "Hillingdon",
+      "competition": "League"
+    }
+  ]
+}

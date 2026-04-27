@@ -1,0 +1,36 @@
+{
+  "lastUpdated": "2026-04-27",
+  "source": "Provided by Stanley · stats from Mitoo TeamHist",
+  "squad": [
+    { "name": "Steve Nicholson",  "position": "Manager",    "role": "Manager" },
+
+    { "name": "Jack Carmody",     "position": "Goalkeeper", "apps": 19, "goals": 1 },
+    { "name": "Jack Burlikowski", "position": "Goalkeeper", "apps": 5 },
+
+    { "name": "Reggie Bourke",    "position": "Defender",   "apps": 19, "goals": 3 },
+    { "name": "Zak Rogers",       "position": "Defender",   "apps": 15, "goals": 2 },
+    { "name": "Max Wood",         "position": "Defender",   "apps": 11 },
+    { "name": "Ryan Carmody",     "position": "Defender",   "apps": 11 },
+    { "name": "Finley Evans",     "position": "Defender",   "apps": 3, "role": "Assistant Manager" },
+    { "name": "Jamie Gunn",       "position": "Defender",   "apps": 13 },
+    { "name": "Jack Harper",      "position": "Defender",   "apps": 14 },
+    { "name": "Cody Rogers",      "position": "Defender",   "apps": 11 },
+
+    { "name": "Tyler Richards",   "position": "Midfielder", "apps": 17, "goals": 5 },
+    { "name": "Lewis Jones",      "position": "Midfielder", "apps": 8,  "goals": 3 },
+    { "name": "Kieran Pusey",     "position": "Midfielder", "apps": 18, "goals": 3 },
+    { "name": "Logan McDonald",   "position": "Midfielder", "apps": 14, "goals": 1 },
+    { "name": "Jack Norman",      "position": "Midfielder", "apps": 18, "goals": 2 },
+    { "name": "Stanley Thompson", "position": "Midfielder", "apps": 17, "goals": 2 },
+    { "name": "Chris Henry",      "position": "Midfielder", "apps": 11, "goals": 1 },
+    { "name": "Joe Murphy",       "position": "Midfielder", "apps": 5,  "goals": 1 },
+    { "name": "George Blood",     "position": "Midfielder", "apps": 8 },
+    { "name": "Cameron Hibbs",    "position": "Midfielder", "apps": 2 },
+    { "name": "Jake Nicholson",   "position": "Midfielder", "apps": 12 },
+
+    { "name": "Jack Garnham",     "position": "Forward",    "apps": 17, "goals": 13 },
+    { "name": "Stan O'Toole",     "position": "Forward",    "apps": 10, "goals": 6 },
+    { "name": "Mason Chahal",     "position": "Forward",    "apps": 15, "goals": 3 },
+    { "name": "Billy Watkins",    "position": "Forward",    "apps": 18, "goals": 2 }
+  ]
+}

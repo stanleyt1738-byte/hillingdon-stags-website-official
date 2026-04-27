@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Match Reports — Hillingdon Stags FC</title>
+  <link rel="icon" type="image/svg+xml" href="assets/badge.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main>
+  <section class="section">
+    <div class="container">
+      <div class="section-title"><h2>Match Reports</h2></div>
+      <p class="muted">Write-ups from match days &mdash; the good, the bad and the muddy.</p>
+      <div id="reports" class="mt-1"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-title"><h2>Gallery</h2></div>
+      <p class="muted">Photos from match days. Drop new pics in the <code>/assets/gallery/</code> folder and I'll wire them up.</p>
+      <div id="gallery" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem;">
+        <div style="background: var(--stag-grey-100); aspect-ratio: 4/3; display:flex; align-items:center; justify-content:center; border-radius: var(--radius);" class="muted">No photos yet</div>
+        <div style="background: var(--stag-grey-100); aspect-ratio: 4/3; display:flex; align-items:center; justify-content:center; border-radius: var(--radius);" class="muted">No photos yet</div>
+        <div style="background: var(--stag-grey-100); aspect-ratio: 4/3; display:flex; align-items:center; justify-content:center; border-radius: var(--radius);" class="muted">No photos yet</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="js/main.js"></script>
+<script>
+document.addEventListener("stags:ready", async () => {
+  const data = await loadJSON("data/reports.json");
+  if (data) renderReports(document.getElementById("reports"), data.reports);
+});
+</script>
+
+</body>
+</html>

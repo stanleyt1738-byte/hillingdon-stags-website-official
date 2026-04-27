@@ -1,0 +1,26 @@
+{
+  "name": "Hillingdon Stags FC",
+  "shortName": "Hillingdon Stags",
+  "tagline": "Antlers up, heads down.",
+  "league": "Middlesex County Football League (Sundays)",
+  "division": "Division Four (North)",
+  "leagueShort": "Middlesex County Sunday League",
+  "season": "2025/26",
+  "founded": null,
+  "homeGround": null,
+  "matchDay": "Sunday",
+  "standardKickoff": "10:30 BST",
+  "kits": {
+    "home": { "primary": "#F5B82E", "secondary": "#1A1A1A", "name": "Gold & black" },
+    "away": { "primary": "#5E2B8A", "secondary": "#FFFFFF", "name": "Purple" }
+  },
+  "mitooUrl": "https://www.mitoofootball.com/LeagueTab.cfm?TblName=Matches&DivisionID=220&LeagueCode=MDXS2025",
+  "social": {
+    "instagram": {
+      "handle": "hillingdonstags",
+      "url": "https://www.instagram.com/hillingdonstags/"
+    },
+    "twitter": null,
+    "facebook": null
+  }
+}

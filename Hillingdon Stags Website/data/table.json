@@ -1,0 +1,21 @@
+{
+  "lastUpdated": "2026-04-27",
+  "source": "https://www.mitoofootball.com/LeagueTab.cfm?TblName=Matches&DivisionID=220&LeagueCode=MDXS2025",
+  "season": "2025/26",
+  "division": "Middlesex County Sunday League · Division Four (North)",
+  "asOf": "Monday, 27 April 2026",
+  "table": [
+    { "pos": 1,  "team": "Kensington Dragons (Sunday)",   "P": 21, "W": 15, "D": 3, "L": 2,  "GF": 76, "GA": 29, "GD": 47,  "Pts": 48 },
+    { "pos": 2,  "team": "Dar United",                    "P": 19, "W": 14, "D": 4, "L": 1,  "GF": 67, "GA": 30, "GD": 37,  "Pts": 46 },
+    { "pos": 3,  "team": "Ryefield",                      "P": 17, "W": 15, "D": 0, "L": 1,  "GF": 70, "GA": 18, "GD": 52,  "Pts": 45 },
+    { "pos": 4,  "team": "Hillingdon Stags",              "P": 20, "W": 10, "D": 5, "L": 5,  "GF": 48, "GA": 38, "GD": 10,  "Pts": 35, "us": true },
+    { "pos": 5,  "team": "Maida Villa",                   "P": 18, "W": 9,  "D": 2, "L": 7,  "GF": 65, "GA": 42, "GD": 23,  "Pts": 29 },
+    { "pos": 6,  "team": "London Samurai Rovers (Sunday)","P": 20, "W": 8,  "D": 1, "L": 11, "GF": 55, "GA": 46, "GD": 9,   "Pts": 25 },
+    { "pos": 7,  "team": "Jugg Boyz",                     "P": 19, "W": 7,  "D": 3, "L": 9,  "GF": 39, "GA": 46, "GD": -7,  "Pts": 24 },
+    { "pos": 8,  "team": "Old Southall",                  "P": 20, "W": 7,  "D": 1, "L": 12, "GF": 37, "GA": 62, "GD": -25, "Pts": 22 },
+    { "pos": 9,  "team": "Chiswick Celtic Reserves",      "P": 18, "W": 5,  "D": 4, "L": 9,  "GF": 34, "GA": 65, "GD": -31, "Pts": 19 },
+    { "pos": 10, "team": "Grove Park Rangers II",         "P": 22, "W": 6,  "D": 1, "L": 15, "GF": 35, "GA": 76, "GD": -41, "Pts": 19 },
+    { "pos": 11, "team": "C.B.Hounslow & Abbots 4ths",    "P": 22, "W": 4,  "D": 3, "L": 15, "GF": 38, "GA": 87, "GD": -49, "Pts": 15 },
+    { "pos": 12, "team": "Kodak Harrow Sunday",           "P": 22, "W": 3,  "D": 3, "L": 16, "GF": 33, "GA": 58, "GD": -25, "Pts": 12 }
+  ]
+}

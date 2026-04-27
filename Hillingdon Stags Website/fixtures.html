@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fixtures — Hillingdon Stags FC</title>
+  <link rel="icon" type="image/svg+xml" href="assets/badge.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main>
+  <section class="section">
+    <div class="container">
+      <div class="section-title"><h2>Upcoming Fixtures</h2></div>
+      <p class="muted">Middlesex County Sunday League · Division Four (North) · 2025/26</p>
+      <div id="fixtures-list" class="card-grid mt-1"></div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="js/main.js"></script>
+<script>
+document.addEventListener("stags:ready", async () => {
+  const data = await loadJSON("data/fixtures.json");
+  if (data) renderFixturesList(document.getElementById("fixtures-list"), data.fixtures);
+});
+</script>
+
+</body>
+</html>

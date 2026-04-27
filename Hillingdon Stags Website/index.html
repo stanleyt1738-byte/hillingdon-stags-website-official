@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hillingdon Stags FC — Sunday League Football, Middlesex</title>
+  <meta name="description" content="Official site of Hillingdon Stags FC — Middlesex County Sunday League, Division Four (North). Fixtures, results, league table and squad." />
+  <link rel="icon" type="image/svg+xml" href="assets/badge.svg" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main>
+
+  <section class="hero">
+    <div class="container">
+      <span class="league-badge">Middlesex County Sunday League · Division Four (North)</span>
+      <h1>HILLINGDON <span class="accent">STAGS</span></h1>
+      <p class="tagline">Antlers up, heads down. Sunday League football, played the right way.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <div class="card-grid">
+
+        <div class="card" id="next-fixture">
+          <h3>Next Fixture</h3>
+          <p class="muted">Loading…</p>
+        </div>
+
+        <div class="card" id="last-result">
+          <h3>Last Result</h3>
+          <p class="muted">Loading…</p>
+        </div>
+
+        <div class="card position-card" id="position">
+          <h3>League Position</h3>
+          <p class="muted">Loading…</p>
+        </div>
+
+      </div>
+
+      <div class="card mt-2">
+        <h3>Recent Form</h3>
+        <div class="form-row" id="form-row"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-title"><h2>Top Scorers</h2></div>
+      <div id="scorers-mini"></div>
+      <p class="text-center mt-1"><a class="btn btn-primary" href="scorers.html">Full leaderboards</a></p>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--stag-black); color: var(--stag-white);">
+    <div class="container text-center">
+      <h2 style="color: var(--stag-gold);">Fancy a game?</h2>
+      <p style="max-width: 540px; margin: 0 auto 1.5rem; color: var(--stag-grey-300);">
+        We're always after lads who'll graft. Sunday morning kick-offs at 10:30am, post-match pints, proper football.
+      </p>
+      <div style="display:flex; gap: 0.75rem; justify-content:center; flex-wrap:wrap;">
+        <a class="btn btn-ghost" href="contact.html">Get in touch</a>
+        <a class="btn btn-primary" href="https://www.instagram.com/hillingdonstags/" target="_blank" rel="noopener">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;vertical-align:-3px;margin-right:6px;">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+          @hillingdonstags
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-title"><h2>Our Sponsors</h2></div>
+      <p class="muted">Massive thanks to the lot backing the Stags this season.</p>
+      <div id="sponsors-strip" class="mt-1"></div>
+      <p class="text-center mt-2"><a class="btn btn-primary" href="sponsors.html">Meet our sponsors</a></p>
+    </div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+
+<script src="js/main.js"></script>
+<script>
+document.addEventListener("stags:ready", async () => {
+  const [fixtures, results, table, scorers, sponsors] = await Promise.all([
+    loadJSON("data/fixtures.json"),
+    loadJSON("data/results.json"),
+    loadJSON("data/table.json"),
+    loadJSON("data/scorers.json"),
+    loadJSON("data/sponsors.json")
+  ]);
+
+  if (fixtures) renderNextFixture(document.getElementById("next-fixture"), fixtures.fixtures);
+  if (results) renderLastResult(document.getElementById("last-result"), results.results);
+  if (table) renderPosition(document.getElementById("position"), table.table);
+  if (results) renderForm(document.getElementById("form-row"), results.results);
+  if (sponsors) renderSponsors(document.getElementById("sponsors-strip"), sponsors.sponsors, { compact: true });
+
+  // top 3 scorers preview
+  if (scorers) {
+    const slot = document.getElementById("scorers-mini");
+    slot.innerHTML = `
+      <div class="card-grid">
+        ${scorers.scorers.slice(0,3).map(p => `
+          <div class="card">
+            <h3>${p.name}</h3>
+            <div style="display:flex; align-items:baseline; justify-content:space-between;">
+              <span style="font-family: var(--font-display); font-size: 2.5rem; color: var(--stag-gold); font-weight: 700;">${p.goals}</span>
+              <span class="meta">goals &middot; ${p.apps} apps</span>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  }
+});
+</script>
+
+</body>
+</html>
