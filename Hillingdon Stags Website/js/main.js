@@ -31,7 +31,7 @@ function renderHeader() {
     <header class="site-header">
       <div class="container">
         <a class="brand" href="index.html">
-          <img src="assets/badge.svg" alt="Hillingdon Stags FC badge" />
+          <img src="assets/badge.png" alt="Hillingdon Stags FC badge" />
           <div class="brand-text">
             <span class="club-name">Hillingdon Stags FC</span>
             <span class="club-tag">Middlesex County · Div 4 (N)</span>
