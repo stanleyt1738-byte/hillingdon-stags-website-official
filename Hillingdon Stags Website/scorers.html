@@ -34,10 +34,26 @@
 <script src="js/main.js"></script>
 <script>
 document.addEventListener("stags:ready", async () => {
-  const data = await loadJSON("data/scorers.json");
+  const [data, resultsData] = await Promise.all([
+    loadJSON("data/scorers.json"),
+    loadJSON("data/results.json")
+  ]);
   if (data) {
     renderScorers(document.getElementById("scorers"), data, "scorers", "Goals");
-    renderScorers(document.getElementById("motm"), data, "motm", "Awards");
+
+    // Derive MOTM counts from results if scorers.json motm is empty
+    let motmSource = data;
+    if ((!data.motm || !data.motm.length) && resultsData && resultsData.results) {
+      const counts = {};
+      for (const r of resultsData.results) {
+        if (r.motm) counts[r.motm] = (counts[r.motm] || 0) + 1;
+      }
+      const motm = Object.entries(counts)
+        .map(([name, awards]) => ({ name, awards }))
+        .sort((a, b) => b.awards - a.awards);
+      motmSource = { ...data, motm };
+    }
+    renderScorers(document.getElementById("motm"), motmSource, "motm", "Awards");
   }
 });
 </script>
