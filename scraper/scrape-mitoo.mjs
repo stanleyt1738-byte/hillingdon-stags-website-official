@@ -203,7 +203,7 @@ async function main() {
 
   // 2. Team history — Stags fixtures and results
   try {
-    const html = await fetchHtml(PAGES.teamHistory);
+const html = ""; // TeamHist disabled — results managed manually for accuracy
     const { fixtures, results } = parseTeamHistory(html);
     console.log(`Team history: ${fixtures.length} fixtures, ${results.length} results`);
 
