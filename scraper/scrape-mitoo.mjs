@@ -15,7 +15,6 @@ import * as cheerio from "cheerio";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const DATA_DIR = resolve(__dirname, "..", "Hillingdon Stags Website", "data");
-
 const TEAM_NAME = "Hillingdon Stags";
 const TEAM_CI = "4870";  // Mitoo team ID for Hillingdon Stags
 const SEASON = "2025/26";
