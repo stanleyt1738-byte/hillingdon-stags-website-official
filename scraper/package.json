@@ -1,0 +1,16 @@
+{
+  "name": "hillingdon-stags-scraper",
+  "version": "1.0.0",
+  "description": "Pulls fixtures, results and league table from Mitoo Football for Hillingdon Stags FC",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "scrape": "node scrape-mitoo.mjs"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
