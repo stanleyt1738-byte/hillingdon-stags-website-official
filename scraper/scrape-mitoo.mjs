@@ -147,6 +147,7 @@ function parseTeamHistory(html) {
 function parseGoalscorers(html) {
   const $ = cheerio.load(html);
   const scorers = [];
+  const seen = new Set();
   $("table").each((_, table) => {
     const $table = $(table);
     if (!$table.text().toLowerCase().includes("goalscorers")) return;
@@ -156,11 +157,17 @@ function parseGoalscorers(html) {
       const nameMatch = cells[1].match(/^([A-Z][A-Za-z'\-]+)\s+([A-Z])$/);
       if (!nameMatch) return;
       const key = `${nameMatch[2]}.${nameMatch[1]}`;
+      if (seen.has(key)) return;
+      seen.add(key);
       const apps = parseInt(cells[2].replace(/[^\d]/g, ""), 10);
       const goals = parseInt(cells[6].replace(/[^\d]/g, ""), 10);
       if (Number.isFinite(goals) && goals > 0) {
         scorers.push({ name: mapName(key), goals, apps: Number.isFinite(apps) ? apps : 0 });
       }
+    });
+  });
+  return scorers.sort((a, b) => b.goals - a.goals);
+}
     });
   });
   return scorers.sort((a, b) => b.goals - a.goals);
