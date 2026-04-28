@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contact / Join the Stags — Hillingdon Stags FC</title>
+  <title>Contact — Hillingdon Stags FC</title>
   <link rel="icon" type="image/png" href="assets/badge.png" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -14,8 +14,8 @@
 <main>
   <section class="section">
     <div class="container" style="max-width: 720px;">
-      <div class="section-title"><h2>Contact / Join the Stags</h2></div>
-      <p>Want to play? Sponsor the lads? Just say hello? Easiest way to reach us is on Instagram &mdash; slide into the DMs and we'll get back to you.</p>
+      <div class="section-title"><h2>Get in Touch</h2></div>
+      <p>Want to get in contact with the club? Head to our Instagram and drop us a message &mdash; DMs are open.</p>
 
       <a href="https://www.instagram.com/hillingdonstags/" target="_blank" rel="noopener"
          class="card mt-1" style="display:flex; align-items:center; gap: 1rem; border-top: 3px solid var(--stag-gold); text-decoration: none;">
@@ -29,40 +29,9 @@
         <div>
           <div style="font-family: var(--font-display); font-size: 0.85rem; letter-spacing: 0.18em; color: var(--stag-grey-500); text-transform: uppercase;">Message us on Instagram</div>
           <div style="font-family: var(--font-display); font-size: 1.5rem; color: var(--stag-black); letter-spacing: 0.04em;">@hillingdonstags</div>
-          <div class="meta" style="margin-top:0.25rem;">DMs are open &mdash; players, sponsors, hellos, all welcome.</div>
+          <div class="meta" style="margin-top:0.25rem;">Sponsors, press, or just saying hello &mdash; all welcome.</div>
         </div>
       </a>
-
-      <div class="card mt-2" style="border-top: 3px solid var(--stag-gold);">
-        <h3>Prefer to send a longer message?</h3>
-        <p class="muted" style="margin-bottom: 1rem;">Fill this in and we'll pick it up next time we're checking the Stags inbox.</p>
-        <form id="contact-form" onsubmit="return submitContact(event)">
-          <div class="form-field">
-            <label for="name">Your name</label>
-            <input id="name" name="name" type="text" required placeholder="John Smith" />
-          </div>
-          <div class="form-field">
-            <label for="contact">Best way to reach you</label>
-            <input id="contact" name="contact" type="text" required placeholder="Instagram handle, phone or email" />
-          </div>
-          <div class="form-field">
-            <label for="reason">What's it about?</label>
-            <select id="reason" name="reason">
-              <option>I want to play for the Stags</option>
-              <option>Sponsorship enquiry</option>
-              <option>Press / media</option>
-              <option>Just saying hello</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="form-field">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="5" required placeholder="Tell us a bit about yourself, what position you play, etc."></textarea>
-          </div>
-          <button class="btn btn-primary" type="submit">Send message</button>
-          <p id="contact-status" class="mt-1 muted" style="font-size: 0.9rem;"></p>
-        </form>
-      </div>
     </div>
   </section>
 </main>
@@ -70,16 +39,6 @@
 <div id="site-footer"></div>
 
 <script src="js/main.js"></script>
-<script>
-function submitContact(e) {
-  e.preventDefault();
-  // Until we wire up a form backend (Formspree / Netlify Forms), just show a thank-you.
-  document.getElementById("contact-status").innerHTML =
-    '<span style="color: var(--stag-win);">Thanks! Message captured. (Form backend to be wired up on deploy &mdash; will email straight to the Stags inbox.)</span>';
-  e.target.reset();
-  return false;
-}
-</script>
 
 </body>
 </html>
