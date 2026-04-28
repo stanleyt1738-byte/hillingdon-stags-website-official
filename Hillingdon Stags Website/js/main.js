@@ -352,7 +352,6 @@ function renderScorers(slot, scorers, key, label) {
     <div class="card-grid">
       ${scorers[key].map((p, i) => `
         <div class="card">
-          <h3>#${i + 1} ${label}</h3>
           <div style="display:flex; align-items:baseline; justify-content:space-between;">
             <span style="font-family: var(--font-display); font-size: 1.2rem; font-weight: 700;">${p.name}</span>
             <span style="font-family: var(--font-display); font-size: 2.25rem; color: var(--stag-gold); font-weight: 700;">${p.goals ?? p.awards}</span>
