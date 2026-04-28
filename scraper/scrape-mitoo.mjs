@@ -168,10 +168,6 @@ function parseGoalscorers(html) {
   });
   return scorers.sort((a, b) => b.goals - a.goals);
 }
-    });
-  });
-  return scorers.sort((a, b) => b.goals - a.goals);
-}
 
 function deriveMotm(results) {
   const counts = {};
