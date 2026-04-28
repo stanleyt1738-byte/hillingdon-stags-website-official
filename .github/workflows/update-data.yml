@@ -1,0 +1,39 @@
+name: Update Mitoo data
+
+on:
+  schedule:
+    - cron: "15 * * * 0,1,2"
+    - cron: "0 7 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install scraper deps
+        working-directory: scraper
+        run: npm install --no-audit --no-fund
+
+      - name: Run scraper
+        working-directory: scraper
+        run: node scrape-mitoo.mjs
+
+      - name: Commit updated data
+        run: |
+          git config user.name "stags-bot"
+          git config user.email "stags-bot@users.noreply.github.com"
+          if [[ -n "$(git status --porcelain data/)" ]]; then
+            git add data/
+            git commit -m "chore(data): refresh from Mitoo $(date -u +'%Y-%m-%dT%H:%MZ')"
+            git push
+          else
+            echo "No changes."
+          fi
