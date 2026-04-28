@@ -1,51 +1,246 @@
 {
-  "lastUpdated": "2026-04-28T09:37:17.784Z",
+  "lastUpdated": "2026-04-27",
   "source": "https://www.mitoofootball.com/TeamHist.cfm?CI=4870&DivisionID=220&TblName=Matches&LeagueCode=MDXS2025",
   "results": [
     {
-      "date": "4026-04-28",
-      "home": "Middlesex County Football League (Sundays) 2025-2026 Season Tuesday, 28 April 2026 Players must be Registered on the League Portal as well as Football Mitoo to be Registered ... continue Hillingdon Stags : Division Four North",
-      "homeGoals": 2026,
+      "date": "2026-04-26",
+      "home": "Kensington Dragons (Sunday)",
+      "homeGoals": 4,
       "away": "Hillingdon Stags",
-      "awayGoals": 2025,
+      "awayGoals": 0,
       "scorers": [],
+      "motm": "Max Wood"
+    },
+    {
+      "date": "2026-04-19",
+      "home": "Hillingdon Stags",
+      "homeGoals": 4,
+      "away": "London Samurai Rovers (Sunday)",
+      "awayGoals": 3,
+      "scorers": [
+        "Mason Chahal",
+        "Lewis Jones",
+        "Tyler Richards",
+        "Zak Rogers"
+      ],
+      "motm": "Zak Rogers"
+    },
+    {
+      "date": "2026-04-12",
+      "home": "C.B.Hounslow & Abbots 4ths",
+      "homeGoals": 1,
+      "away": "Hillingdon Stags",
+      "awayGoals": 2,
+      "scorers": [
+        "Stan O'Toole",
+        "Tyler Richards"
+      ],
+      "motm": "Jack Norman"
+    },
+    {
+      "date": "2026-04-05",
+      "home": "Old Southall",
+      "homeGoals": 1,
+      "away": "Hillingdon Stags",
+      "awayGoals": 0,
+      "scorers": [],
+      "motm": "Jack Norman"
+    },
+    {
+      "date": "2026-03-29",
+      "home": "Hillingdon Stags",
+      "homeGoals": 1,
+      "away": "Maida Villa",
+      "awayGoals": 1,
+      "scorers": [
+        "Mason Chahal"
+      ],
+      "motm": "Jack Carmody"
+    },
+    {
+      "date": "2026-03-22",
+      "home": "Jugg Boyz",
+      "homeGoals": 1,
+      "away": "Hillingdon Stags",
+      "awayGoals": 2,
+      "scorers": [
+        "Jack Garnham",
+        "Billy Watkins"
+      ],
+      "motm": "Chris Henry"
+    },
+    {
+      "date": "2026-03-15",
+      "home": "Hillingdon Stags",
+      "homeGoals": 1,
+      "away": "Kodak Harrow Sunday",
+      "awayGoals": 1,
+      "scorers": [
+        "Stan O'Toole"
+      ],
+      "motm": "Tyler Richards"
+    },
+    {
+      "date": "2026-03-01",
+      "home": "Chiswick Celtic Reserves",
+      "homeGoals": 1,
+      "away": "Hillingdon Stags",
+      "awayGoals": 1,
+      "scorers": [
+        "Kieran Pusey"
+      ],
+      "motm": "Mason Chahal"
+    },
+    {
+      "date": "2026-02-15",
+      "home": "Hillingdon Stags",
+      "homeGoals": 2,
+      "away": "Jugg Boyz",
+      "awayGoals": 1,
+      "scorers": [
+        "Jack Garnham",
+        "Stan O'Toole"
+      ],
+      "motm": "Logan McDonald"
+    },
+    {
+      "date": "2026-02-08",
+      "home": "London Samurai Rovers (Sunday)",
+      "homeGoals": 2,
+      "away": "Hillingdon Stags",
+      "awayGoals": 4,
+      "scorers": [
+        "Mason Chahal",
+        "Stan O'Toole",
+        "Zak Rogers",
+        "Billy Watkins"
+      ],
+      "motm": "Zak Rogers"
+    },
+    {
+      "date": "2026-01-18",
+      "home": "Hillingdon Stags",
+      "homeGoals": 1,
+      "away": "Ryefield",
+      "awayGoals": 4,
+      "scorers": [
+        "Jack Norman"
+      ],
+      "motm": "Jack Harper"
+    },
+    {
+      "date": "2025-11-30",
+      "home": "Hillingdon Stags",
+      "homeGoals": 4,
+      "away": "Kensington Dragons (Sunday)",
+      "awayGoals": 2,
+      "scorers": [
+        "Jack Garnham",
+        "Lewis Jones (2)",
+        "Logan McDonald"
+      ],
+      "motm": "Jack Carmody"
+    },
+    {
+      "date": "2025-11-23",
+      "home": "Hillingdon Stags",
+      "homeGoals": 5,
+      "away": "C.B.Hounslow & Abbots 4ths",
+      "awayGoals": 1,
+      "scorers": [
+        "Jack Garnham (4)",
+        "Tyler Richards"
+      ],
+      "motm": "Jack Garnham"
+    },
+    {
+      "date": "2025-11-09",
+      "home": "Dar United",
+      "homeGoals": 3,
+      "away": "Hillingdon Stags",
+      "awayGoals": 2,
+      "scorers": [
+        "Jack Garnham",
+        "Joe Murphy"
+      ],
+      "motm": "Joe Murphy"
+    },
+    {
+      "date": "2025-11-02",
+      "home": "Hillingdon Stags",
+      "homeGoals": 2,
+      "away": "Chiswick Celtic Reserves",
+      "awayGoals": 2,
+      "scorers": [
+        "Jack Garnham",
+        "Kieran Pusey"
+      ],
+      "motm": "Kieran Pusey"
+    },
+    {
+      "date": "2025-10-26",
+      "home": "Grove Park Rangers II",
+      "homeGoals": 0,
+      "away": "Hillingdon Stags",
+      "awayGoals": 4,
+      "scorers": [
+        "Jack Garnham (2)",
+        "Kieran Pusey",
+        "Tyler Richards"
+      ],
+      "motm": "Cody Rogers"
+    },
+    {
+      "date": "2025-10-12",
+      "home": "Maida Villa",
+      "homeGoals": 5,
+      "away": "Hillingdon Stags",
+      "awayGoals": 1,
+      "scorers": [
+        "Reggie Bourke"
+      ],
+      "motm": "Tyler Richards"
+    },
+    {
+      "date": "2025-10-05",
+      "home": "Hillingdon Stags",
+      "homeGoals": 4,
+      "away": "Old Southall",
+      "awayGoals": 0,
+      "scorers": [
+        "Reggie Bourke",
+        "Jack Carmody",
+        "Stan O'Toole (2)"
+      ],
       "motm": null
     },
     {
-      "date": "4026-04-28",
-      "home": "Hillingdon Stags",
-      "homeGoals": 2025,
-      "away": "Middlesex County Football League (Sundays) 2025-2026 Season Tuesday, 28 April 2026 Players must be Registered on the League Portal as well as Football Mitoo to be Registered ... continue",
-      "awayGoals": 2026,
-      "scorers": [],
-      "motm": null
+      "date": "2025-09-28",
+      "home": "Kodak Harrow Sunday",
+      "homeGoals": 3,
+      "away": "Hillingdon Stags",
+      "awayGoals": 3,
+      "scorers": [
+        "Jack Garnham",
+        "Jack Norman",
+        "Stanley Thompson"
+      ],
+      "motm": "Tyler Richards"
     },
     {
-      "date": "4026-04-28",
+      "date": "2025-09-21",
       "home": "Hillingdon Stags",
-      "homeGoals": 2025,
-      "away": "Middlesex County Football League (Sundays) 2025-2026 Season Tuesday, 28 April 2026",
-      "awayGoals": 2026,
-      "scorers": [],
-      "motm": null
-    },
-    {
-      "date": "4026-04-28",
-      "home": "Hillingdon Stags",
-      "homeGoals": 2025,
-      "away": "Middlesex County Football League (Sundays) 2025-2026 Season Tuesday, 28 April 2026",
-      "awayGoals": 2026,
-      "scorers": [],
-      "motm": null
-    },
-    {
-      "date": "4025-09-12",
-      "home": "Hillingdon Stags",
-      "homeGoals": 2025,
-      "away": "Season 2025-2026 2024-2025 2023-2024 2022-2023 2021-2022 2020-2021 2019-2020 2018-2019 2017-2018 2016-2017 2015-2016 2014-2015 2013-2014 2012-2013 2011-2012 September Select 07 Sun14 Sun21 Sun28 Sun October Select 05 Sun08 Wed12 Sun19 Sun26 Sun29 Wed November Select 02 Sun09 Sun16 Sun23 Sun30 Sun December Select 07 Sun14 Sun January Select 11 Sun18 Sun25 Sun February Select 01 Sun08 Sun15 Sun22 Sun March Select 01 Sun08 Sun15 Sun22 Sun29 Sun April Select 05 Sun09 Thu12 Sun19 Sun26 Sun30 Thu May Select 03 Sun10 Sun17 Sun20 Wed24 Sun27 Wed31 Sun",
-      "awayGoals": 2026,
-      "scorers": [],
-      "motm": null
+      "homeGoals": 5,
+      "away": "Grove Park Rangers II",
+      "awayGoals": 2,
+      "scorers": [
+        "Reggie Bourke",
+        "Jack Garnham",
+        "Chris Henry",
+        "Tyler Richards",
+        "Stanley Thompson"
+      ],
+      "motm": "Jack Garnham"
     }
   ]
 }
