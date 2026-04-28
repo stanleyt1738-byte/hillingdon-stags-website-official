@@ -58,11 +58,11 @@ const clean = (s) => (s || "").replace(/\u00a0/g, " ").replace(/\s+/g, " ").trim
 const mapName = (n) => NAME_MAP[clean(n)] || clean(n);
 
 function parseUKDate(str) {
-  const m = clean(str).match(/(\d{1,2})\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{4})?/i);
+  const m = clean(str).match(/(\d{1,2})\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\w*\s+(\d{4})?/i);
   if (!m) return null;
   const months = { jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12 };
   const day = parseInt(m[1], 10);
-  const month = months[m[2].toLowerCase()];
+  const month = months[m[2].toLowerCase().slice(0, 3)];
   let year = m[3] ? parseInt(m[3], 10) : null;
   if (!year) {
     const seasonStart = parseInt(SEASON.split("/")[0], 10) + 2000;
