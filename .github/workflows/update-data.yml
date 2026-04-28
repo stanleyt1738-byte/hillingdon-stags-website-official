@@ -30,8 +30,8 @@ jobs:
         run: |
           git config user.name "stags-bot"
           git config user.email "stags-bot@users.noreply.github.com"
-          if [[ -n "$(git status --porcelain data/)" ]]; then
-            git add data/
+          git add -A
+          if ! git diff --cached --quiet; then
             git commit -m "chore(data): refresh from Mitoo $(date -u +'%Y-%m-%dT%H:%MZ')"
             git push
           else
