@@ -16,7 +16,7 @@ const LEAGUE_CODE = "MDXS2025";
 
 const PAGES = {
   table: `${BASE}/LeagueTab.cfm?TblName=Matches&DivisionID=${DIVISION_ID}&LeagueCode=${LEAGUE_CODE}`,
-  teamHistory: `${BASE}/TeamHist.cfm?CI=${TEAM_CI}&DivisionID=${DIVISION_ID}&TblName=Matches&LeagueCode=${LEAGUE_CODE}`
+  teamHistory: `${BASE}/TeamHistAll.cfm?CI=${TEAM_CI}&TblName=Matches&LeagueCode=${LEAGUE_CODE}&DivisionID=${DIVISION_ID}`
 };
 
 // Mitoo gives names as "I.Surname" — map them to full names
@@ -93,6 +93,12 @@ function parseTablePage(html) {
   return rows;
 }
 
+// Extract team name and optional bracket note from a cell like "Moor Mead [ Home Win on penalties ]"
+function parseTeamCell(raw) {
+  const m = raw.match(/^(.*?)\s*\[([^\]]+)\]\s*$/);
+  return m ? { name: m[1].trim(), note: m[2].trim() } : { name: raw.trim(), note: null };
+}
+
 function parseTeamHistory(html) {
   const $ = cheerio.load(html);
   const fixtures = [];
@@ -102,14 +108,23 @@ function parseTeamHistory(html) {
   for (let i = 0; i < trs.length; i++) {
     const $tr = $(trs[i]);
     const cells = $tr.children("td").map((_, td) => clean($(td).text())).get();
-    if (cells.length !== 6) continue;
+    if (cells.length !== 7) continue;
 
-    const [marker, homeTeam, hgStr, agStr, awayTeam, dateStr] = cells;
+    const [marker, compRaw, homeRaw, hgStr, agStr, awayRaw, dateStr] = cells;
     const m = (marker || "").trim();
     if (m && !/^[WDL]$/.test(m)) continue;
 
     const isoDate = parseUKDate(dateStr);
     if (!isoDate) continue;
+
+    // Parse competition and optional round from cell (e.g. "Patrons Division 4 Challenge Cup Quarter Final")
+    const compParts = compRaw.split(/\s{2,}|\n/);
+    const competition = compParts[0].trim();
+    const round = compParts[1] ? compParts[1].trim() : null;
+
+    const { name: homeTeam, note: homeNote } = parseTeamCell(homeRaw);
+    const { name: awayTeam, note: awayNote } = parseTeamCell(awayRaw);
+    const note = homeNote || awayNote || null;
 
     const homeIsStags = homeTeam.toLowerCase().includes("hillingdon stags");
     const awayIsStags = awayTeam.toLowerCase().includes("hillingdon stags");
@@ -134,11 +149,19 @@ function parseTeamHistory(html) {
 
     const hg = parseInt(hgStr.replace(/[^\d]/g, ""), 10);
     const ag = parseInt(agStr.replace(/[^\d]/g, ""), 10);
+    const scoresValid = Number.isFinite(hg) && Number.isFinite(ag) && hg <= 30 && ag <= 30;
 
-    if (/^[WDL]$/.test(m) && Number.isFinite(hg) && Number.isFinite(ag) && hg <= 30 && ag <= 30) {
-      results.push({ date: isoDate, home: homeTeam, homeGoals: hg, away: awayTeam, awayGoals: ag, scorers, motm });
-    } else if (!m && !/\d/.test(hgStr) && !/\d/.test(agStr)) {
-      fixtures.push({ date: isoDate, kickoff: "10:30", home: homeTeam, away: awayTeam, venue: "", competition: "League" });
+    const entry = { date: isoDate, competition, ...(round ? { round } : {}), home: homeTeam, away: awayTeam };
+
+    if (/^[WDL]$/.test(m)) {
+      if (scoresValid) {
+        results.push({ ...entry, homeGoals: hg, awayGoals: ag, ...(note ? { note } : {}), scorers, motm });
+      } else {
+        // Awarded/walkover — no numeric score
+        results.push({ ...entry, homeGoals: null, awayGoals: null, note: note || "Result awarded", scorers, motm });
+      }
+    } else if (!m && !scoresValid) {
+      fixtures.push({ ...entry, kickoff: "10:30", venue: "" });
     }
   }
   return { fixtures, results };
@@ -214,7 +237,7 @@ async function main() {
     });
 
     // Safety: only overwrite results if we got a sensible number
-    if (results.length >= 5) {
+    if (results.length >= 3) {
       await saveJson("results.json", {
         lastUpdated: now, source: PAGES.teamHistory,
         results: results.sort((a, b) => b.date.localeCompare(a.date))
