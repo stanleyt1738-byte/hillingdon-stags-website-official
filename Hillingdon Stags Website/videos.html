@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Videos — Hillingdon Stags FC</title>
+  <link rel="icon" type="image/png" href="assets/badge.png" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main>
+  <section class="section">
+    <div class="container">
+      <div class="section-title"><h2>Videos</h2></div>
+      <div id="videos"></div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="js/main.js"></script>
+<script>
+document.addEventListener("stags:ready", async () => {
+  const data = await loadJSON("data/videos.json");
+  if (data) renderVideos(document.getElementById("videos"), data.sections);
+});
+</script>
+
+</body>
+</html>

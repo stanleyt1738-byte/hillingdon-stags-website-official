@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { href: "scorers.html", label: "Scorers" },
   { href: "reports.html", label: "Reports" },
   { href: "gallery.html", label: "Gallery" },
+  { href: "videos.html", label: "Videos" },
   { href: "sponsors.html", label: "Sponsors" },
   { href: "contact.html", label: "Contact" }
 ];
@@ -383,6 +384,24 @@ function renderReports(slot, reports) {
       <div style="font-family: var(--font-display); color: var(--stag-gold-dark); font-size: 0.95rem; margin-bottom: 0.5rem;">${r.result}</div>
       <p>${r.summary}</p>
       ${r.motm ? `<div class="meta">MOTM: <strong>${r.motm}</strong></div>` : ""}
+    </div>
+  `).join("");
+}
+
+/* ===== Render: videos ===== */
+function renderVideos(slot, sections) {
+  if (!slot || !sections || !sections.length) return;
+  slot.innerHTML = sections.map(s => `
+    ${s.title ? `<div class="section-title" style="margin-top: 2rem;"><h2>${s.title}</h2></div>` : ""}
+    <div class="video-grid">
+      ${s.videos.map(v => `
+        <div class="video-card">
+          <video controls preload="metadata" playsinline>
+            <source src="${v.file}" type="video/mp4" />
+          </video>
+          <div class="video-card-title">${v.title}</div>
+        </div>
+      `).join("")}
     </div>
   `).join("");
 }

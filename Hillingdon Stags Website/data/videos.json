@@ -1,0 +1,27 @@
+{
+  "lastUpdated": "2026-04-29",
+  "sections": [
+    {
+      "id": "standalone",
+      "title": null,
+      "videos": [
+        { "title": "Away Kit Trailer", "file": "assets/videos/AWAY KIT TRAILER.mp4" },
+        { "title": "Home Kit Trailer", "file": "assets/videos/HOME KIT TRAILER.mp4" },
+        { "title": "Last Minute Win Limbs", "file": "assets/videos/LAST MINUTE WIN LIMBS.mp4" }
+      ]
+    },
+    {
+      "id": "pens",
+      "title": "Penalties Vs Moor Mead",
+      "videos": [
+        { "title": "Gam's Pen", "file": "assets/videos/pens/GAMS PEN.mp4" },
+        { "title": "Jack's Penalty Save", "file": "assets/videos/pens/JACKS PENALTY SAVE.mp4" },
+        { "title": "Reggie's Pen", "file": "assets/videos/pens/REGGIES PEN.mp4" },
+        { "title": "Stan's Pen", "file": "assets/videos/pens/STANS PEN.mp4" },
+        { "title": "Tyler's Pen", "file": "assets/videos/pens/TYLERS PEN.mp4" },
+        { "title": "Logan's Pen", "file": "assets/videos/pens/LOGANS PEN.mp4" },
+        { "title": "Penalty Win Limbs", "file": "assets/videos/pens/PENALTY WIN LIMBS.mp4" }
+      ]
+    }
+  ]
+}
