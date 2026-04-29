@@ -156,8 +156,8 @@ nav.primary a.active {
 .hero.has-photo {
   background-image: url('../assets/team-photo.jpg');
   background-size: cover;
-  background-position: center 35%;
-  padding: 4rem 0 5.5rem;
+  background-position: center 50%;
+  padding: 7rem 0 9rem;
 }
 
 .hero::before {
