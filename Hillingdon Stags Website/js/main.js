@@ -44,7 +44,7 @@ function renderHeader() {
             ${navHtml}
             <li>
               <a href="${INSTAGRAM_URL}" target="_blank" rel="noopener" title="Follow us on Instagram"
-                 style="display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border:1px solid var(--stag-gold); border-radius:50%; color: var(--stag-gold);">
+                 style="display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; padding:0; border:1px solid var(--stag-gold); border-radius:50%; color: var(--stag-gold);">
                 ${IG_ICON_SVG}
               </a>
             </li>
