@@ -221,20 +221,25 @@ function renderResultsList(slot, results) {
     slot.innerHTML = `<p class="muted">No results yet this season.</p>`;
     return;
   }
-  slot.innerHTML = results.map(r => `
+  slot.innerHTML = results.map(r => {
+    const isCup = r.competition && r.competition !== "Division Four North";
+    const compLabel = isCup ? `${r.competition}${r.round ? " &middot; " + r.round : ""}` : null;
+    const scoreDisplay = r.homeGoals === null ? "Awarded" : `${r.homeGoals}&ndash;${r.awayGoals}`;
+    return `
     <div class="card">
-      <div class="meta">${fmtDate(r.date, { weekday: "long", year: true })}</div>
+      <div class="meta">${fmtDate(r.date, { weekday: "long", year: true })}${compLabel ? ` &middot; <strong>${compLabel}</strong>` : ""}</div>
       <div class="match-row">
         <span class="home ${isStags(r.home) ? "is-stags" : ""}">${r.home}</span>
-        <span class="score">${r.homeGoals}&ndash;${r.awayGoals}</span>
+        <span class="score">${scoreDisplay}</span>
         <span class="away ${isStags(r.away) ? "is-stags" : ""}">${r.away}</span>
       </div>
       <div class="meta">
-        ${r.scorers && r.scorers.length ? "&#9917; " + r.scorers.join(", ") : ""}
+        ${r.note ? `<em>${r.note}</em>` : ""}
+        ${r.scorers && r.scorers.length ? (r.note ? " &middot; " : "") + "&#9917; " + r.scorers.join(", ") : ""}
         ${r.motm ? " &middot; MOTM: " + r.motm : ""}
       </div>
-    </div>
-  `).join("");
+    </div>`;
+  }).join("");
 }
 
 /* ===== Render: league table ===== */
