@@ -484,7 +484,7 @@ function renderGalleryPreview(slot, matches) {
         <div class="gallery-preview-title">${latest.title}</div>
         <div class="gallery-preview-meta">${fmtDate(latest.date, { weekday: "long", year: true })} &middot; ${latest.result}</div>
       </div>
-      <a href="reports.html" class="btn btn-primary">All Photos</a>
+      <a href="gallery.html" class="btn btn-primary">All Photos</a>
     </div>
     <div class="gallery-preview-grid">
       ${previewPhotos.map((src, i) => `
