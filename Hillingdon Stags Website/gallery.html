@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gallery — Hillingdon Stags FC</title>
+  <link rel="icon" type="image/png" href="assets/badge.png" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main>
+  <section class="section">
+    <div class="container">
+      <div class="section-title"><h2>Match Photos</h2></div>
+      <p class="muted">Photos from match days &mdash; click any photo to view full size.</p>
+      <div id="gallery" class="mt-1"></div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="js/main.js"></script>
+<script>
+document.addEventListener("stags:ready", async () => {
+  const data = await loadJSON("data/gallery.json");
+  if (data) renderGallery(document.getElementById("gallery"), data.matches);
+});
+</script>
+
+</body>
+</html>

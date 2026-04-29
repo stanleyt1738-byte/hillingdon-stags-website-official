@@ -53,6 +53,13 @@
 
   <section class="section">
     <div class="container">
+      <div class="section-title"><h2>Latest Photos</h2></div>
+      <div id="gallery-preview"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
       <div class="section-title"><h2>Top Scorers</h2></div>
       <div id="scorers-mini"></div>
       <p class="text-center mt-1"><a class="btn btn-primary" href="scorers.html">Full leaderboards</a></p>
@@ -76,12 +83,13 @@
 <script src="js/main.js"></script>
 <script>
 document.addEventListener("stags:ready", async () => {
-  const [fixtures, results, table, scorers, sponsors] = await Promise.all([
+  const [fixtures, results, table, scorers, sponsors, gallery] = await Promise.all([
     loadJSON("data/fixtures.json"),
     loadJSON("data/results.json"),
     loadJSON("data/table.json"),
     loadJSON("data/scorers.json"),
-    loadJSON("data/sponsors.json")
+    loadJSON("data/sponsors.json"),
+    loadJSON("data/gallery.json")
   ]);
 
   if (fixtures) renderNextFixture(document.getElementById("next-fixture"), fixtures.fixtures);
@@ -89,6 +97,7 @@ document.addEventListener("stags:ready", async () => {
   if (table) renderPosition(document.getElementById("position"), table.table);
   if (results) renderForm(document.getElementById("form-row"), results.results);
   if (sponsors) renderSponsors(document.getElementById("sponsors-strip"), sponsors.sponsors, { compact: true });
+  if (gallery) renderGalleryPreview(document.getElementById("gallery-preview"), gallery.matches);
 
   // top 3 scorers preview
   if (scorers) {

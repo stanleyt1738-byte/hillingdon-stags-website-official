@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { href: "squad.html", label: "Squad" },
   { href: "scorers.html", label: "Scorers" },
   { href: "reports.html", label: "Reports" },
+  { href: "gallery.html", label: "Gallery" },
   { href: "sponsors.html", label: "Sponsors" },
   { href: "contact.html", label: "Contact" }
 ];
@@ -384,6 +385,121 @@ function renderReports(slot, reports) {
       ${r.motm ? `<div class="meta">MOTM: <strong>${r.motm}</strong></div>` : ""}
     </div>
   `).join("");
+}
+
+/* ===== Gallery lightbox ===== */
+let _lbPhotos = [];
+let _lbIdx = 0;
+let _lbEl = null;
+
+function _createLightbox() {
+  _lbEl = document.createElement("div");
+  _lbEl.className = "gallery-lb";
+  _lbEl.innerHTML = `
+    <button class="gallery-lb-close" aria-label="Close">&times;</button>
+    <button class="gallery-lb-btn" id="lb-prev" aria-label="Previous">&#8592;</button>
+    <img class="gallery-lb-img" src="" alt="Match photo" />
+    <button class="gallery-lb-btn" id="lb-next" aria-label="Next">&#8594;</button>
+    <div class="gallery-lb-counter"></div>
+  `;
+  document.body.appendChild(_lbEl);
+  _lbEl.querySelector(".gallery-lb-close").addEventListener("click", _closeLightbox);
+  _lbEl.querySelector("#lb-prev").addEventListener("click", () => { _lbIdx = (_lbIdx - 1 + _lbPhotos.length) % _lbPhotos.length; _updateLightbox(); });
+  _lbEl.querySelector("#lb-next").addEventListener("click", () => { _lbIdx = (_lbIdx + 1) % _lbPhotos.length; _updateLightbox(); });
+  _lbEl.addEventListener("click", e => { if (e.target === _lbEl) _closeLightbox(); });
+  document.addEventListener("keydown", e => {
+    if (!_lbEl || !_lbEl.classList.contains("open")) return;
+    if (e.key === "Escape") _closeLightbox();
+    if (e.key === "ArrowLeft") { _lbIdx = (_lbIdx - 1 + _lbPhotos.length) % _lbPhotos.length; _updateLightbox(); }
+    if (e.key === "ArrowRight") { _lbIdx = (_lbIdx + 1) % _lbPhotos.length; _updateLightbox(); }
+  });
+}
+
+function _updateLightbox() {
+  _lbEl.querySelector(".gallery-lb-img").src = _lbPhotos[_lbIdx];
+  _lbEl.querySelector(".gallery-lb-counter").textContent = `${_lbIdx + 1} / ${_lbPhotos.length}`;
+}
+
+function _openLightbox(photos, startIdx) {
+  _lbPhotos = photos;
+  _lbIdx = startIdx;
+  if (!_lbEl) _createLightbox();
+  _updateLightbox();
+  _lbEl.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function _closeLightbox() {
+  if (_lbEl) _lbEl.classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+/* ===== Render: full gallery (reports page) ===== */
+function renderGallery(slot, matches) {
+  if (!slot || !matches || !matches.length) return;
+
+  const matchPhotos = {};
+
+  slot.innerHTML = matches.map((m, mi) => {
+    const photos = m.photos.map(f => `${m.folder}/${f}`);
+    matchPhotos[m.id] = photos;
+    const thumbs = photos.map((src, i) => `
+      <div class="gallery-thumb" data-mid="${m.id}" data-idx="${i}">
+        <img src="${src}" alt="Match photo ${i + 1}" loading="lazy" />
+      </div>
+    `).join("");
+    return `
+      <details class="gallery-match"${mi === 0 ? " open" : ""}>
+        <summary class="gallery-match-header">
+          <div class="gallery-match-info">
+            <span class="gallery-match-title">${m.title}</span>
+            <span class="gallery-match-meta">${fmtDate(m.date, { weekday: "long", year: true })} &middot; ${m.competition}</span>
+            <span class="gallery-match-result">${m.result}</span>
+          </div>
+          <span class="gallery-match-count">${m.photos.length} photos</span>
+        </summary>
+        <div class="gallery-grid">${thumbs}</div>
+      </details>
+    `;
+  }).join("");
+
+  slot.addEventListener("click", e => {
+    const thumb = e.target.closest(".gallery-thumb");
+    if (!thumb) return;
+    const photos = matchPhotos[thumb.dataset.mid];
+    if (photos) _openLightbox(photos, parseInt(thumb.dataset.idx, 10));
+  });
+}
+
+/* ===== Render: gallery preview (home page) ===== */
+function renderGalleryPreview(slot, matches) {
+  if (!slot || !matches || !matches.length) return;
+  const latest = matches[0];
+  const allPhotos = latest.photos.map(f => `${latest.folder}/${f}`);
+  const previewPhotos = allPhotos.slice(0, 8);
+
+  slot.innerHTML = `
+    <div class="gallery-preview-header">
+      <div>
+        <div class="gallery-preview-title">${latest.title}</div>
+        <div class="gallery-preview-meta">${fmtDate(latest.date, { weekday: "long", year: true })} &middot; ${latest.result}</div>
+      </div>
+      <a href="reports.html" class="btn btn-primary">All Photos</a>
+    </div>
+    <div class="gallery-preview-grid">
+      ${previewPhotos.map((src, i) => `
+        <div class="gallery-thumb" data-idx="${i}">
+          <img src="${src}" alt="Match photo" loading="lazy" />
+        </div>
+      `).join("")}
+    </div>
+  `;
+
+  slot.addEventListener("click", e => {
+    const thumb = e.target.closest(".gallery-thumb");
+    if (!thumb) return;
+    _openLightbox(allPhotos, parseInt(thumb.dataset.idx, 10));
+  });
 }
 
 /* ===== Page initialiser ===== */
