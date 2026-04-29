@@ -1,25 +1,179 @@
 {
   "reports": [
     {
-      "date": "2026-04-26",
-      "title": "Stags fall to Kensington at the top of the table",
-      "result": "Kensington Dragons (Sunday) 4 — 0 Hillingdon Stags",
-      "summary": "A tough afternoon away to the league leaders. The Stags battled hard but Kensington's quality showed in front of goal. M.Wood was named Man of the Match for a commanding display at the back, putting his body on the line to limit the damage. The lads bounce back next week against Ryefield.",
-      "motm": "M. Wood"
+      "date": "2025-09-21",
+      "title": "Stags open with a statement — five goals in a dominant home display",
+      "result": "Hillingdon Stags 5–2 Grove Park Rangers II",
+      "summary": "The perfect start to the season. Five different scorers — Bourke, Garnham, Henry, Richards and Thompson — as the Stags ran out comfortable winners at home. A real statement of intent from the lads.",
+      "motm": "J. Garnham"
+    },
+    {
+      "date": "2025-09-28",
+      "title": "Battling point at Kodak after end-to-end draw",
+      "result": "Kodak Harrow Sunday 3–3 Hillingdon Stags",
+      "summary": "The Stags went toe-to-toe with Kodak in a feisty away draw. Garnham, Norman and Thompson all found the net but the hosts kept pegging them back. A point away from home, though the lads will know they had more in the tank.",
+      "motm": "T. Richards"
+    },
+    {
+      "date": "2025-10-05",
+      "title": "Four goals and a clean sheet as Stags dismantle Old Southall",
+      "result": "Hillingdon Stags 4–0 Old Southall",
+      "summary": "A clinical Sunday morning from the Stags. Bourke, Carmody and O'Toole (with a brace) did the damage as Hillingdon kept it tight at the back. A proper team performance all round.",
+      "motm": null
+    },
+    {
+      "date": "2025-10-12",
+      "title": "Tough afternoon at Maida Villa",
+      "result": "Maida Villa 5–1 Hillingdon Stags",
+      "summary": "A rough one. Maida Villa were clinical on the day and the Stags couldn't find a way back into it after a difficult first half. Bourke grabbed the consolation. Heads up and move on.",
+      "motm": "T. Richards"
+    },
+    {
+      "date": "2025-10-19",
+      "title": "Cup exit as West Drayton prove too strong",
+      "result": "Hillingdon Stags 1–3 West Drayton Reserves",
+      "summary": "The Stags bowed out of the Roger Perry Junior Open Cup in round two. Garnham pulled one back but West Drayton's quality showed throughout. Burlikowski earned MOTM for his efforts between the sticks.",
+      "motm": "J. Burlikowski"
+    },
+    {
+      "date": "2025-10-26",
+      "title": "Stags bounce back with four away from home",
+      "result": "Grove Park Rangers II 0–4 Hillingdon Stags",
+      "summary": "Back to winning ways and then some. Garnham bagged a brace with Pusey and Richards also on the scoresheet in a commanding away performance. Rogers put in a solid shift at the back to earn MOTM.",
+      "motm": "C. Rogers"
+    },
+    {
+      "date": "2025-10-29",
+      "title": "Stags progress in the cup as Maida Villa default",
+      "result": "Awarded — Maida Villa defaulted",
+      "summary": "The Stags progress to the Patrons Division 4 Challenge Cup quarter-final without kicking a ball. Maida Villa were unable to fulfil the fixture and the tie was awarded to Hillingdon. On to the quarters.",
+      "motm": null
+    },
+    {
+      "date": "2025-11-02",
+      "title": "Stags pegged back twice in frustrating home draw",
+      "result": "Hillingdon Stags 2–2 Chiswick Celtic Reserves",
+      "summary": "Two goals to the good and the Stags couldn't hold on. Garnham and Pusey both scored but Chiswick worked hard to level it up. Pusey took home MOTM despite the result.",
+      "motm": "K. Pusey"
+    },
+    {
+      "date": "2025-11-09",
+      "title": "Stags fall narrowly at Dar United in a tight contest",
+      "result": "Dar United 3–2 Hillingdon Stags",
+      "summary": "A close one that went the wrong way. Garnham and Murphy both scored but Dar United nicked it with a third late on. Murphy was excellent throughout and rightly took the MOTM.",
+      "motm": "J. Murphy"
+    },
+    {
+      "date": "2025-11-16",
+      "title": "Stags into the cup quarters with a convincing win",
+      "result": "Hillingdon Stags 3–1 C.B.Hounslow & Abbots 4ths",
+      "summary": "A controlled cup performance at home. Bourke, McDonald and Richards all scored as the Stags progressed comfortably. Thompson put in a standout display to earn the MOTM.",
+      "motm": "S. Thompson"
+    },
+    {
+      "date": "2025-11-23",
+      "title": "Garnham bags four as Stags run riot against Hounslow",
+      "result": "Hillingdon Stags 5–1 C.B.Hounslow & Abbots 4ths",
+      "summary": "Jack Garnham was unplayable on the day, bagging four goals in an emphatic home win. Richards added the fifth. A statement display from the Stags as the season heads into December.",
+      "motm": "J. Garnham"
+    },
+    {
+      "date": "2025-11-30",
+      "title": "Big win over Dragons as Stags put down a marker",
+      "result": "Hillingdon Stags 4–2 Kensington Dragons (Sunday)",
+      "summary": "A proper test against one of the top sides in the division and the Stags delivered. Garnham, Jones (2) and McDonald all scored in a hard-fought home win. Carmody was commanding throughout.",
+      "motm": "J. Carmody"
+    },
+    {
+      "date": "2026-01-18",
+      "title": "Ryefield too strong as Stags return from the winter break",
+      "result": "Hillingdon Stags 1–4 Ryefield",
+      "summary": "The Stags returned from the winter break and faced a Ryefield side in blistering form. Norman got one back but the visitors were clinical all afternoon. Harper was bright throughout and earned the MOTM in a difficult game.",
+      "motm": "J. Harper"
+    },
+    {
+      "date": "2026-02-01",
+      "title": "Stags through to the semis on penalties in cup thriller against Moor Mead",
+      "result": "Hillingdon Stags 1–1 Moor Mead (Won on penalties)",
+      "summary": "What a cup tie. Wood equalised to force the shootout and Carmody was the hero in goal, pulling off crucial saves to send the Stags through to the semi-final. An absolute scenes at the end. Carmody took a well-deserved MOTM.",
+      "motm": "J. Carmody"
+    },
+    {
+      "date": "2026-02-08",
+      "title": "Brilliant away performance as Stags put four past Samurai",
+      "result": "London Samurai Rovers 2–4 Hillingdon Stags",
+      "summary": "Outstanding away display in the away kit. Chahal, O'Toole, Rogers and Watkins all got on the scoresheet as the Stags ran out convincing winners. Z. Rogers put in a player-of-the-match performance from the back.",
+      "motm": "Z. Rogers"
+    },
+    {
+      "date": "2026-02-15",
+      "title": "Garnham and O'Toole seal narrow home win over Jugg Boyz",
+      "result": "Hillingdon Stags 2–1 Jugg Boyz",
+      "summary": "The Stags made it count at home with a battling win. Garnham and O'Toole grabbed the goals as the Stags ground out three important points. McDonald was excellent in midfield and earned himself MOTM.",
+      "motm": "L. McDonald"
+    },
+    {
+      "date": "2026-03-01",
+      "title": "Pusey earns a point as Stags draw away at Chiswick",
+      "result": "Chiswick Celtic Reserves 1–1 Hillingdon Stags",
+      "summary": "A gritty point away from home. Pusey scored to give the Stags the lead but Chiswick found an equaliser. Chahal was sharp throughout and earned the MOTM award.",
+      "motm": "M. Chahal"
+    },
+    {
+      "date": "2026-03-08",
+      "title": "Cup run ends at Ryefield in the semi-final",
+      "result": "Ryefield 4–1 Hillingdon Stags",
+      "summary": "A tough exit from the Patrons Cup. Ryefield were the better side on the day and the Stags couldn't find a way back into it. Bourke scored the consolation and was immense throughout in a difficult afternoon — a well-deserved MOTM.",
+      "motm": "R. Bourke"
+    },
+    {
+      "date": "2026-03-15",
+      "title": "O'Toole earns a point in a tight home draw with Kodak",
+      "result": "Hillingdon Stags 1–1 Kodak Harrow Sunday",
+      "summary": "A frustrating share of the spoils at home. O'Toole's goal looked to have won it but Kodak grabbed a late equaliser. Richards was the standout on the day with a dominant midfield display.",
+      "motm": "T. Richards"
+    },
+    {
+      "date": "2026-03-22",
+      "title": "Garnham and Watkins fire Stags to away win at Jugg Boyz",
+      "result": "Jugg Boyz 1–2 Hillingdon Stags",
+      "summary": "Back-to-back wins and another away three points. Garnham and Watkins were on the scoresheet as the Stags showed real quality going forward. Henry ran the game from midfield and was a deserved MOTM.",
+      "motm": "C. Henry"
+    },
+    {
+      "date": "2026-03-29",
+      "title": "Chahal earns a share of the spoils against Maida Villa",
+      "result": "Hillingdon Stags 1–1 Maida Villa",
+      "summary": "A competitive Sunday afternoon at home against a strong Maida Villa side. Chahal found the net to level it up but neither side could find a winner. Carmody marshalled things well throughout and was named MOTM.",
+      "motm": "J. Carmody"
+    },
+    {
+      "date": "2026-04-05",
+      "title": "Narrow defeat away at Old Southall",
+      "result": "Old Southall 1–0 Hillingdon Stags",
+      "summary": "A difficult away day as Old Southall nicked it with a single goal. The Stags created chances but couldn't find the breakthrough. Norman worked tirelessly throughout and was named MOTM.",
+      "motm": "J. Norman"
+    },
+    {
+      "date": "2026-04-12",
+      "title": "Richards seals it at Hounslow",
+      "result": "C.B.Hounslow & Abbots 4ths 1–2 Hillingdon Stags",
+      "summary": "Away day grit. O'Toole opened the scoring before the home side levelled, but Richards' second-half strike won it. Norman bagged the MOTM award for an influential performance from midfield, getting up and down the pitch all afternoon.",
+      "motm": "J. Norman"
     },
     {
       "date": "2026-04-19",
       "title": "Stags edge thriller against Samurai",
-      "result": "Hillingdon Stags 4 — 3 London Samurai Rovers (Sunday)",
+      "result": "Hillingdon Stags 4–3 London Samurai Rovers (Sunday)",
       "summary": "A proper end-to-end Sunday League scrap. Goals from Chahal, Jones, Richards and Z.Rogers (MOTM) saw the Stags hold on for a vital three points. Top performance.",
       "motm": "Z. Rogers"
     },
     {
-      "date": "2026-04-12",
-      "title": "Tom Richards seals it at Hounslow",
-      "result": "C.B.Hounslow & Abbots 4ths 1 — 2 Hillingdon Stags",
-      "summary": "Away day grit. O'Toole opened the scoring before the home side levelled, but Richards' second-half strike won it. Norman bagged the MOTM award for an influential performance from midfield, getting up and down the pitch all afternoon.",
-      "motm": "J. Norman"
+      "date": "2026-04-26",
+      "title": "Stags fall to Kensington at the top of the table",
+      "result": "Kensington Dragons (Sunday) 4–0 Hillingdon Stags",
+      "summary": "A tough afternoon away to the league leaders. The Stags battled hard but Kensington's quality showed in front of goal. M.Wood was named Man of the Match for a commanding display at the back, putting his body on the line to limit the damage. The lads bounce back next week against Ryefield.",
+      "motm": "M. Wood"
     }
   ]
 }
