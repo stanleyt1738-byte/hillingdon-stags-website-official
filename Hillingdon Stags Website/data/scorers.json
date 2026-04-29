@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-28T21:19:46.227Z",
+  "lastUpdated": "2026-04-29T07:13:36.903Z",
   "source": "https://www.mitoofootball.com/TeamHist.cfm?CI=4870&DivisionID=220&TblName=Matches&LeagueCode=MDXS2025",
   "season": "2025/26",
   "scorers": [
@@ -79,5 +79,58 @@
       "apps": 5
     }
   ],
-  "motm": []
+  "motm": [
+    {
+      "name": "Tyler Richards",
+      "awards": 3
+    },
+    {
+      "name": "Jack Garnham",
+      "awards": 2
+    },
+    {
+      "name": "Jack Carmody",
+      "awards": 2
+    },
+    {
+      "name": "Zak Rogers",
+      "awards": 2
+    },
+    {
+      "name": "Jack Norman",
+      "awards": 2
+    },
+    {
+      "name": "Cody Rogers",
+      "awards": 1
+    },
+    {
+      "name": "Kieran Pusey",
+      "awards": 1
+    },
+    {
+      "name": "Joe Murphy",
+      "awards": 1
+    },
+    {
+      "name": "Jack Harper",
+      "awards": 1
+    },
+    {
+      "name": "Logan McDonald",
+      "awards": 1
+    },
+    {
+      "name": "Mason Chahal",
+      "awards": 1
+    },
+    {
+      "name": "Chris Henry",
+      "awards": 1
+    },
+    {
+      "name": "Max Wood",
+      "awards": 1
+    }
+  ]
 }
