@@ -303,7 +303,7 @@ function renderSquad(slot, squad) {
         <div class="squad-grid">
           ${groups[pos].map(p => `
             <div class="player-card">
-              <div class="photo">${initials(p.name)}</div>
+              <div class="photo">${p.photo ? `<img src="${p.photo}" alt="${p.name}" loading="lazy" />` : initials(p.name)}</div>
               <div class="info">
                 <div class="name">${p.name}</div>
                 ${p.nickname ? `<div class="nick">"${p.nickname}"</div>` : ""}

@@ -397,7 +397,7 @@ nav.primary a.active {
 
 .player-card .photo {
   background: var(--stag-black);
-  height: 160px;
+  height: 220px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -405,6 +405,15 @@ nav.primary a.active {
   font-family: var(--font-display);
   font-size: 4rem;
   font-weight: 700;
+  overflow: hidden;
+}
+
+.player-card .photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
 }
 
 .player-card .info { padding: 0.85rem 0.5rem 1rem; }
