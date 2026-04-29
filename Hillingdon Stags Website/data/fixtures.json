@@ -1,22 +1,22 @@
 {
-  "lastUpdated": "2026-04-29T07:13:36.903Z",
-  "source": "https://www.mitoofootball.com/TeamHist.cfm?CI=4870&DivisionID=220&TblName=Matches&LeagueCode=MDXS2025",
+  "lastUpdated": "2026-04-29T12:07:54.095Z",
+  "source": "https://www.mitoofootball.com/TeamHistAll.cfm?CI=4870&TblName=Matches&LeagueCode=MDXS2025&DivisionID=220",
   "fixtures": [
     {
       "date": "2026-05-03",
-      "kickoff": "10:30",
+      "competition": "Division Four North",
       "home": "Ryefield",
       "away": "Hillingdon Stags",
-      "venue": "",
-      "competition": "League"
+      "kickoff": "10:30",
+      "venue": ""
     },
     {
       "date": "2026-05-10",
-      "kickoff": "10:30",
+      "competition": "Division Four North",
       "home": "Hillingdon Stags",
       "away": "Dar United",
-      "venue": "",
-      "competition": "League"
+      "kickoff": "10:30",
+      "venue": ""
     }
   ]
 }
