@@ -70,7 +70,8 @@ function renderFooter() {
       <div class="container">
         <div>
           <strong style="color: var(--stag-gold); font-family: var(--font-display); letter-spacing: 0.1em;">HILLINGDON STAGS FC</strong><br />
-          &copy; ${year} · Middlesex County Sunday League · Div 4 (N)
+          &copy; ${year} · Middlesex County Sunday League · Div 4 (N)<br />
+          <span style="font-size: 0.8rem; color: var(--stag-grey-300);">Home ground: Coney Green, Hillingdon</span>
         </div>
         <div style="display:flex; flex-direction:column; gap:6px; align-items:flex-end;">
           <a href="${INSTAGRAM_URL}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:8px; color: var(--stag-gold); font-family: var(--font-display); letter-spacing: 0.06em;">
@@ -215,7 +216,7 @@ function renderFixturesList(slot, fixtures) {
         <span class="vs">vs</span>
         <span class="away ${isStags(f.away) ? "is-stags" : ""}">${f.away}</span>
       </div>
-      <div class="meta">${f.venue || ""}${f.competition ? " &middot; " + f.competition : ""}</div>
+      <div class="meta">${f.venue || (isStags(f.home) ? "Coney Green, Hillingdon" : "")}${f.competition ? " &middot; " + f.competition : ""}</div>
     </div>
   `).join("");
 }
