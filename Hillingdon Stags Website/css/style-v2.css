@@ -413,7 +413,7 @@ nav.primary a.active {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top;
+  object-position: var(--photo-pos, center);
   display: block;
 }
 
@@ -789,4 +789,7 @@ details[open] > .gallery-match-header::after { transform: rotate(180deg); }
   nav.primary a { padding: 0.4rem 0.5rem; font-size: 0.85rem; }
   .brand-text .club-name { font-size: 1rem; }
   .hero { padding: 2rem 0 2.5rem; }
+
+  .player-card .photo { height: 300px; }
+  .player-card .photo img { object-position: var(--photo-pos-mobile, 40%); }
 }
