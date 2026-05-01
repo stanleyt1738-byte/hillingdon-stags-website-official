@@ -26,7 +26,7 @@
     { "name": "Joe Murphy",       "position": "Midfielder", "apps": 5,  "goals": 1,       "avgRating": 7.8, "photo": "assets/players/joe-murphy.jpg" },
     { "name": "George Blood",     "position": "Midfielder", "apps": 8,                    "avgRating": 8.3, "photo": "assets/players/george-blood.jpg" },
     { "name": "Cameron Hibbs",    "position": "Midfielder", "apps": 2,                    "avgRating": 7.7, "photo": "assets/players/cameron-hibbs.jpg", "photoPos": "center", "photoPosMobile": "55% 65%" },
-    { "name": "Jake Nicholson",   "position": "Midfielder", "apps": 12,                   "avgRating": 7.6, "photo": "assets/players/jake-nicholson.jpg" },
+    { "name": "Jake Nicholson",   "position": "Midfielder", "apps": 12,                   "avgRating": 7.5, "photo": "assets/players/jake-nicholson.jpg" },
 
     { "name": "Jack Garnham",     "position": "Forward",    "apps": 17, "goals": 13,      "avgRating": 8.1, "photo": "assets/players/jack-garnham.jpg" },
     { "name": "Stan O'Toole",     "position": "Forward",    "apps": 10, "goals": 6,       "avgRating": 8.1, "photo": "assets/players/stan-otoole.jpg" },
