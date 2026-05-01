@@ -460,6 +460,44 @@ nav.primary a.active {
   font-weight: 700;
 }
 
+/* ===== Match report dropdown ===== */
+.report-drop {
+  margin-top: 0.85rem;
+  border-top: 1px solid var(--stag-grey-100);
+  padding-top: 0.75rem;
+}
+
+.report-drop summary {
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--stag-gold-dark);
+  user-select: none;
+}
+
+.report-drop summary::-webkit-details-marker { display: none; }
+
+.report-drop summary::after { content: " ▾"; }
+.report-drop[open] summary::after { content: " ▴"; }
+
+.report-drop .report-body {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--stag-grey-700);
+}
+
+.report-drop .report-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  color: var(--stag-black);
+  margin-bottom: 0.5rem;
+}
+
 /* ===== Buttons ===== */
 .btn {
   display: inline-block;

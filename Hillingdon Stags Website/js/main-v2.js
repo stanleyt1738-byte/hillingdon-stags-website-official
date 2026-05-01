@@ -10,7 +10,6 @@ const NAV_ITEMS = [
   { href: "table.html", label: "Table" },
   { href: "squad.html", label: "Squad" },
   { href: "scorers.html", label: "Scorers" },
-  { href: "reports.html", label: "Reports" },
   { href: "gallery.html", label: "Gallery" },
   { href: "videos.html", label: "Videos" },
   { href: "sponsors.html", label: "Sponsors" },
@@ -245,6 +244,14 @@ function renderResultsList(slot, results) {
         ${r.scorers && r.scorers.length ? (r.note ? " &middot; " : "") + "&#9917; " + r.scorers.join(", ") : ""}
         ${r.motm ? " &middot; MOTM: " + r.motm : ""}
       </div>
+      ${r.report ? `
+      <details class="report-drop">
+        <summary>Match Report</summary>
+        <div class="report-body">
+          ${r.reportTitle ? `<p class="report-title">${r.reportTitle}</p>` : ""}
+          <p>${r.report}</p>
+        </div>
+      </details>` : ""}
     </div>`;
   }).join("");
 }
