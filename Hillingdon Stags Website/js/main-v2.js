@@ -309,7 +309,7 @@ function renderSquad(slot, squad) {
                 ${p.nickname ? `<div class="nick">"${p.nickname}"</div>` : ""}
                 <div class="pos">${p.position}</div>
                 ${p.role ? `<div class="role" style="margin-top:0.3rem; font-size:0.7rem; letter-spacing:0.15em; color: var(--stag-gold-dark); text-transform:uppercase; font-weight:600;">${p.role}</div>` : ""}
-                ${(p.goals || p.apps) ? `<div class="meta" style="margin-top:0.4rem;">${p.apps ? p.apps + " apps" : ""}${p.goals ? " · " + p.goals + " goals" : ""}</div>` : ""}
+                ${(p.goals || p.apps || p.avgRating) ? `<div class="meta" style="margin-top:0.4rem;">${p.apps ? p.apps + " apps" : ""}${p.goals ? " · " + p.goals + " goals" : ""}${p.avgRating ? " · " + p.avgRating + " avg" : ""}</div>` : ""}
               </div>
             </div>
           `).join("")}
