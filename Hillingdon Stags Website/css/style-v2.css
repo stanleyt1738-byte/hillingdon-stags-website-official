@@ -382,8 +382,9 @@ nav.primary a.active {
 /* ===== Squad grid ===== */
 .squad-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 220px));
   gap: 1rem;
+  justify-content: center;
 }
 
 .player-card {
@@ -397,7 +398,7 @@ nav.primary a.active {
 
 .player-card .photo {
   background: var(--stag-black);
-  height: 220px;
+  height: 260px;
   display: flex;
   align-items: center;
   justify-content: center;

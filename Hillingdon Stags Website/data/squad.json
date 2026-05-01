@@ -11,7 +11,7 @@
     { "name": "Zak Rogers",       "position": "Defender",   "apps": 15, "goals": 2,       "photo": "assets/players/zak-rogers.jpg" },
     { "name": "Max Wood",         "position": "Defender",   "apps": 11,                   "photo": "assets/players/max-wood.jpg" },
     { "name": "Ryan Carmody",     "position": "Defender",   "apps": 11,                   "photo": "assets/players/ryan-carmody.jpg" },
-    { "name": "Finley Evans",     "position": "Defender",   "apps": 3,  "role": "Assistant Manager", "photo": "assets/players/finley-evans.jpg", "photoPos": "center" },
+    { "name": "Finley Evans",     "position": "Defender",   "apps": 3,  "role": "Assistant Manager", "photo": "assets/players/finley-evans.jpg", "photoPos": "35%" },
     { "name": "Jamie Gunn",       "position": "Defender",   "apps": 13,                   "photo": "assets/players/jamie-gunn.jpg" },
     { "name": "Jack Harper",      "position": "Defender",   "apps": 14,                   "photo": "assets/players/jack-harper.jpg" },
     { "name": "Cody Rogers",      "position": "Defender",   "apps": 11,                   "photo": "assets/players/cody-rogers.jpg" },
