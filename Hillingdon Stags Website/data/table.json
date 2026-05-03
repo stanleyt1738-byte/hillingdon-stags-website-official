@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-03T14:31:41.584Z",
+  "lastUpdated": "2026-05-03T18:05:38.949Z",
   "source": "https://www.mitoofootball.com/LeagueTab.cfm?TblName=Matches&DivisionID=220&LeagueCode=MDXS2025",
   "season": "2025/26",
   "division": "Middlesex County Sunday League · Division Four (North)",
@@ -7,14 +7,14 @@
     {
       "pos": 1,
       "team": "Kensington Dragons (Sunday)",
-      "P": 21,
-      "W": 15,
+      "P": 22,
+      "W": 16,
       "D": 3,
       "L": 2,
-      "GF": 76,
-      "GA": 29,
-      "GD": 47,
-      "Pts": 48,
+      "GF": 81,
+      "GA": 33,
+      "GD": 48,
+      "Pts": 51,
       "us": false
     },
     {
@@ -33,13 +33,13 @@
     {
       "pos": 3,
       "team": "Dar United",
-      "P": 19,
+      "P": 20,
       "W": 14,
       "D": 4,
-      "L": 1,
-      "GF": 67,
-      "GA": 30,
-      "GD": 37,
+      "L": 2,
+      "GF": 71,
+      "GA": 35,
+      "GD": 36,
       "Pts": 46,
       "us": false
     },
