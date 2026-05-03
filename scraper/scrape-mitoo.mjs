@@ -1,4 +1,4 @@
-import { writeFile } from "node:fs/promises";
+import { writeFile, readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import * as cheerio from "cheerio";
@@ -238,9 +238,19 @@ async function main() {
 
     // Safety: only overwrite results if we got a sensible number
     if (results.length >= 3) {
+      // Preserve any hand-written report fields from the existing file
+      const existingReports = {};
+      try {
+        const raw = await readFile(resolve(DATA_DIR, "results.json"), "utf8");
+        for (const r of JSON.parse(raw).results || []) {
+          if (r.report) existingReports[r.date] = { report: r.report, ...(r.reportTitle ? { reportTitle: r.reportTitle } : {}) };
+        }
+      } catch { /* no existing file — skip */ }
+
+      const merged = results.map(r => ({ ...r, ...(existingReports[r.date] || {}) }));
       await saveJson("results.json", {
         lastUpdated: now, source: PAGES.teamHistory,
-        results: results.sort((a, b) => b.date.localeCompare(a.date))
+        results: merged.sort((a, b) => b.date.localeCompare(a.date))
       });
     } else {
       console.warn(`! Only ${results.length} results parsed — keeping existing file as a safety`);
