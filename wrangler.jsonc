@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "hillingdon-stags-website-official",
+  "compatibility_date": "2026-05-03",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "Hillingdon Stags Website"
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+}
