@@ -221,6 +221,14 @@ function renderFixturesList(slot, fixtures) {
 }
 
 /* ===== Render: full results list ===== */
+function resultClass(r) {
+  if (r.homeGoals === null || r.awayGoals === null) return "";
+  const stagsHome = isStags(r.home);
+  const ours   = stagsHome ? r.homeGoals : r.awayGoals;
+  const theirs = stagsHome ? r.awayGoals : r.homeGoals;
+  return ours > theirs ? "result-win" : ours < theirs ? "result-loss" : "result-draw";
+}
+
 function renderResultsList(slot, results) {
   if (!slot || !results) return;
   if (!results.length) {
@@ -232,7 +240,7 @@ function renderResultsList(slot, results) {
     const compLabel = isCup ? `${r.competition}${r.round ? " &middot; " + r.round : ""}` : null;
     const scoreDisplay = r.homeGoals === null ? "Awarded" : `${r.homeGoals}&ndash;${r.awayGoals}`;
     return `
-    <div class="card">
+    <div class="card ${resultClass(r)}">
       <div class="meta">${fmtDate(r.date, { weekday: "long", year: true })}${compLabel ? ` &middot; <strong>${compLabel}</strong>` : ""}</div>
       <div class="match-row">
         <span class="home ${isStags(r.home) ? "is-stags" : ""}">${r.home}</span>

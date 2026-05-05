@@ -241,6 +241,10 @@ nav.primary a.active {
   border-top: 3px solid var(--stag-gold);
 }
 
+.card.result-win  { border-top-color: var(--stag-win); }
+.card.result-draw { border-top-color: var(--stag-draw); }
+.card.result-loss { border-top-color: var(--stag-loss); }
+
 .card h3 {
   font-size: 0.85rem;
   letter-spacing: 0.18em;
