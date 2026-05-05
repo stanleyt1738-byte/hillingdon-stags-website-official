@@ -222,7 +222,12 @@ function renderFixturesList(slot, fixtures) {
 
 /* ===== Render: full results list ===== */
 function resultClass(r) {
-  if (r.homeGoals === null || r.awayGoals === null) return "";
+  if (r.homeGoals === null || r.awayGoals === null) {
+    const note = (r.note || "").toLowerCase();
+    if ((isStags(r.home) && note.includes("home win")) || (isStags(r.away) && note.includes("away win"))) return "result-win";
+    if ((isStags(r.home) && note.includes("home loss")) || (isStags(r.away) && note.includes("away loss"))) return "result-loss";
+    return "";
+  }
   const stagsHome = isStags(r.home);
   const ours   = stagsHome ? r.homeGoals : r.awayGoals;
   const theirs = stagsHome ? r.awayGoals : r.homeGoals;
