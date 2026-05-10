@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-10T10:47:56.870Z",
+  "lastUpdated": "2026-05-10T11:29:16.147Z",
   "source": "https://www.mitoofootball.com/LeagueTab.cfm?TblName=Matches&DivisionID=220&LeagueCode=MDXS2025",
   "season": "2025/26",
   "division": "Middlesex County Sunday League · Division Four (North)",
@@ -20,14 +20,14 @@
     {
       "pos": 2,
       "team": "Ryefield",
-      "P": 18,
-      "W": 15,
+      "P": 19,
+      "W": 16,
       "D": 1,
       "L": 1,
-      "GF": 72,
+      "GF": 76,
       "GA": 20,
-      "GD": 52,
-      "Pts": 46,
+      "GD": 56,
+      "Pts": 49,
       "us": false
     },
     {
@@ -111,13 +111,13 @@
     {
       "pos": 9,
       "team": "Chiswick Celtic Reserves",
-      "P": 19,
+      "P": 20,
       "W": 5,
       "D": 4,
-      "L": 10,
+      "L": 11,
       "GF": 34,
-      "GA": 65,
-      "GD": -31,
+      "GA": 69,
+      "GD": -35,
       "Pts": 19,
       "us": false
     },
