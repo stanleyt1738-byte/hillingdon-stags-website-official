@@ -1,11 +1,24 @@
 {
-  "lastUpdated": "2026-05-17T12:07:55.911Z",
+  "lastUpdated": "2026-05-17T15:45:02.244Z",
   "source": "https://www.mitoofootball.com/LeagueTab.cfm?TblName=Matches&DivisionID=220&LeagueCode=MDXS2025",
   "season": "2025/26",
   "division": "Middlesex County Sunday League · Division Four (North)",
   "table": [
     {
       "pos": 1,
+      "team": "Ryefield",
+      "P": 20,
+      "W": 17,
+      "D": 1,
+      "L": 1,
+      "GF": 81,
+      "GA": 22,
+      "GD": 59,
+      "Pts": 52,
+      "us": false
+    },
+    {
+      "pos": 2,
       "team": "Kensington Dragons (Sunday)",
       "P": 22,
       "W": 16,
@@ -18,28 +31,15 @@
       "us": false
     },
     {
-      "pos": 2,
-      "team": "Ryefield",
-      "P": 19,
-      "W": 16,
-      "D": 1,
-      "L": 1,
-      "GF": 76,
-      "GA": 20,
-      "GD": 56,
-      "Pts": 49,
-      "us": false
-    },
-    {
       "pos": 3,
       "team": "Dar United",
-      "P": 21,
+      "P": 22,
       "W": 15,
       "D": 4,
-      "L": 2,
-      "GF": 78,
-      "GA": 35,
-      "GD": 43,
+      "L": 3,
+      "GF": 80,
+      "GA": 40,
+      "GD": 40,
       "Pts": 49,
       "us": false
     },
