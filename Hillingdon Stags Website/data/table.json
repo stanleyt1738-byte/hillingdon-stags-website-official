@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-24T15:51:23.264Z",
+  "lastUpdated": "2026-05-24T20:14:46.822Z",
   "source": "https://www.mitoofootball.com/LeagueTab.cfm?TblName=Matches&DivisionID=220&LeagueCode=MDXS2025",
   "season": "2025/26",
   "division": "Middlesex County Sunday League · Division Four (North)",
@@ -45,6 +45,19 @@
     },
     {
       "pos": 4,
+      "team": "Maida Villa",
+      "P": 22,
+      "W": 13,
+      "D": 2,
+      "L": 7,
+      "GF": 72,
+      "GA": 45,
+      "GD": 27,
+      "Pts": 41,
+      "us": false
+    },
+    {
+      "pos": 5,
       "team": "Hillingdon Stags",
       "P": 22,
       "W": 10,
@@ -55,19 +68,6 @@
       "GD": 3,
       "Pts": 36,
       "us": true
-    },
-    {
-      "pos": 5,
-      "team": "Maida Villa",
-      "P": 20,
-      "W": 11,
-      "D": 2,
-      "L": 7,
-      "GF": 68,
-      "GA": 43,
-      "GD": 25,
-      "Pts": 35,
-      "us": false
     },
     {
       "pos": 6,
@@ -111,13 +111,13 @@
     {
       "pos": 9,
       "team": "Chiswick Celtic Reserves",
-      "P": 20,
+      "P": 22,
       "W": 5,
       "D": 4,
-      "L": 11,
-      "GF": 34,
-      "GA": 69,
-      "GD": -35,
+      "L": 13,
+      "GF": 36,
+      "GA": 73,
+      "GD": -37,
       "Pts": 19,
       "us": false
     },
