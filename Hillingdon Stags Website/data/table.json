@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-28T10:49:13.660Z",
+  "lastUpdated": "2026-05-29T10:39:37.550Z",
   "source": "https://www.mitoofootball.com/LeagueTab.cfm?TblName=Matches&DivisionID=220&LeagueCode=MDXS2025",
   "season": "2025/26",
   "division": "Middlesex County Sunday League · Division Four (North)",
@@ -7,14 +7,14 @@
     {
       "pos": 1,
       "team": "Ryefield",
-      "P": 21,
-      "W": 18,
+      "P": 22,
+      "W": 19,
       "D": 1,
       "L": 1,
       "GF": 93,
       "GA": 23,
       "GD": 70,
-      "Pts": 55,
+      "Pts": 58,
       "us": false
     },
     {
@@ -98,10 +98,10 @@
     {
       "pos": 8,
       "team": "Old Southall",
-      "P": 21,
+      "P": 22,
       "W": 7,
       "D": 2,
-      "L": 12,
+      "L": 13,
       "GF": 39,
       "GA": 64,
       "GD": -25,
