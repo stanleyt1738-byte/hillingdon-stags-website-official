@@ -35,7 +35,7 @@ function renderHeader() {
           <img src="assets/badge.png" alt="Hillingdon Stags FC badge" />
           <div class="brand-text">
             <span class="club-name">Hillingdon Stags FC</span>
-            <span class="club-tag">Middlesex County · Div 4 (N)</span>
+            <span class="club-tag">Middlesex County · Div 3</span>
           </div>
         </a>
         <nav class="primary" aria-label="Primary">
@@ -69,7 +69,7 @@ function renderFooter() {
       <div class="container">
         <div>
           <strong style="color: var(--stag-gold); font-family: var(--font-display); letter-spacing: 0.1em;">HILLINGDON STAGS FC</strong><br />
-          &copy; ${year} · Middlesex County Sunday League · Div 4 (N)<br />
+          &copy; ${year} · Middlesex County Sunday League · Div 3<br />
           <span style="font-size: 0.8rem; color: var(--stag-grey-300);">Home ground: Coney Green, Hillingdon</span>
         </div>
         <div style="display:flex; flex-direction:column; gap:6px; align-items:flex-end;">
@@ -241,7 +241,7 @@ function renderResultsList(slot, results) {
     return;
   }
   slot.innerHTML = results.map(r => {
-    const isCup = r.competition && r.competition !== "Division Four North";
+    const isCup = r.competition && r.competition !== "Division Three";
     const compLabel = isCup ? `${r.competition}${r.round ? " &middot; " + r.round : ""}` : null;
     const scoreDisplay = r.homeGoals === null ? "Awarded" : `${r.homeGoals}&ndash;${r.awayGoals}`;
     return `
