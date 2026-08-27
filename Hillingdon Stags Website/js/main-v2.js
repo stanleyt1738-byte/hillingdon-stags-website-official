@@ -158,9 +158,16 @@ function renderLastResult(slot, results) {
 
 /* ===== Render: league position ===== */
 function renderPosition(slot, table) {
-  if (!slot || !table || !table.length) return;
+  if (!slot) return;
+  if (!table || !table.length) {
+    slot.innerHTML = `<p class="muted">Table not published yet.</p>`;
+    return;
+  }
   const us = table.find(row => row.us || isStags(row.team));
-  if (!us) return;
+  if (!us) {
+    slot.innerHTML = `<p class="muted">Table not published yet.</p>`;
+    return;
+  }
   slot.innerHTML = `
     <div style="display:flex; align-items:baseline; gap:0.5rem;">
       <span class="pos-number">${us.pos}<span style="font-size:1.5rem">${ordinal(us.pos)}</span></span>
@@ -187,7 +194,11 @@ function ordinal(n) {
 
 /* ===== Render: recent form ===== */
 function renderForm(slot, results) {
-  if (!slot || !results || !results.length) return;
+  if (!slot) return;
+  if (!results || !results.length) {
+    slot.innerHTML = `<span class="muted">No results yet this season.</span>`;
+    return;
+  }
   const last5 = results.slice(0, 5).map(r => {
     const stagsHome = isStags(r.home);
     const ours = stagsHome ? r.homeGoals : r.awayGoals;
@@ -272,6 +283,10 @@ function renderResultsList(slot, results) {
 /* ===== Render: league table ===== */
 function renderLeagueTable(slot, table) {
   if (!slot || !table) return;
+  if (!table.length) {
+    slot.innerHTML = `<p class="muted">League table not published yet — check back once the season kicks off.</p>`;
+    return;
+  }
   slot.innerHTML = `
     <div class="table-wrap">
       <table class="league-table">
@@ -380,6 +395,10 @@ function renderSponsors(slot, sponsors, opts = {}) {
 /* ===== Render: scorers / motm ===== */
 function renderScorers(slot, scorers, key, label) {
   if (!slot || !scorers || !scorers[key]) return;
+  if (!scorers[key].length) {
+    slot.innerHTML = `<p class="muted">No goals scored yet this season — check back after the first matches!</p>`;
+    return;
+  }
   slot.innerHTML = `
     <div class="card-grid">
       ${scorers[key].map((p, i) => `
