@@ -18,11 +18,11 @@ const DATA_DIR = resolve(__dirname, "..", "data");
 
 const TEAM_NAME = "Hillingdon Stags";
 const TEAM_CI = "4870";  // Mitoo team ID for Hillingdon Stags
-const SEASON = "2025/26";
+const SEASON = "2026/27";
 
 const BASE = "https://www.mitoofootball.com";
-const DIVISION_ID = "220";
-const LEAGUE_CODE = "MDXS2025";
+const DIVISION_ID = "4";
+const LEAGUE_CODE = "MDXS2026";
 
 // Mitoo URLs we scrape
 const PAGES = {
@@ -191,7 +191,7 @@ async function main() {
         lastUpdated: now,
         source: PAGES.table,
         season: SEASON,
-        division: "Middlesex County Sunday League · Division Four (North)",
+        division: "Middlesex County Sunday League · Division Three",
         table
       });
       console.log(`League table: ${table.length} teams`);
