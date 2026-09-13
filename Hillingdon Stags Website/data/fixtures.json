@@ -1,22 +1,5 @@
 {
-  "lastUpdated": "2026-09-13T21:08:36.653Z",
+  "lastUpdated": "2026-09-13T23:11:36.449Z",
   "source": "https://www.mitoofootball.com/FixtResMonth.cfm?TblName=Matches&DivisionID=4&LeagueCode=MDXS2026&MonthNo={8..12,1..5}",
-  "fixtures": [
-    {
-      "date": "2026-09-20",
-      "kickoff": "10:30 AM",
-      "home": "London Tigers",
-      "away": "Hillingdon Stags",
-      "venue": "London Tigers Sports Complex",
-      "competition": "Division Three"
-    },
-    {
-      "date": "2026-09-27",
-      "kickoff": "10:30 AM",
-      "home": "Hillingdon Stags",
-      "away": "Jugg Boyz",
-      "venue": "Coney Green",
-      "competition": "Division Three"
-    }
-  ]
+  "fixtures": []
 }
