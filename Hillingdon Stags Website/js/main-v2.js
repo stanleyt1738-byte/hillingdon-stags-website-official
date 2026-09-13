@@ -620,7 +620,7 @@ function renderSponsors(slot, sponsors, opts = {}) {
   slot.innerHTML = sponsors.map(s => `
     <div class="card" style="text-align:center;">
       ${s.tier ? `<div style="font-size:0.7rem; letter-spacing:0.2em; color: var(--stag-gold-dark); text-transform:uppercase; font-weight:600; margin-bottom:0.5rem;">${s.tier}</div>` : ""}
-      <div style="background: var(--stag-black); height: 130px; display:flex; align-items:center; justify-content:center; color: var(--stag-gold); font-family: var(--font-display); font-size: 1.4rem; letter-spacing: 0.05em; border-radius: var(--radius); padding: 0 1rem;">
+      <div style="background: var(--stag-grey-100); height: 130px; display:flex; align-items:center; justify-content:center; color: var(--stag-black); font-family: var(--font-display); font-size: 1.4rem; letter-spacing: 0.05em; border-radius: var(--radius); padding: 0 1rem;">
         ${s.logo ? `<img src="${s.logo}" alt="${s.name} logo" style="max-height: 110px; max-width: 100%;" />` : s.name}
       </div>
       <div style="margin-top: 0.85rem;">

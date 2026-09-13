@@ -4,7 +4,7 @@
     {
       "name": "The Fellas Podcast",
       "tier": "Main Sponsor",
-      "logo": null,
+      "logo": "assets/sponsors/fellas-podcast.png",
       "url": null,
       "description": "The Fellas is a weekly podcast hosted by content creators Calfreezy, TheBurntChip and AB.<br><br>The pod is well established in the UK scene, and we're delighted that they've put their faith in the Stags for the 26/27 season, taking centre stage in the middle of our kit.",
       "social": {}
@@ -12,7 +12,7 @@
     {
       "name": "165th Floor",
       "tier": "Sleeve & Shorts Sponsor",
-      "logo": null,
+      "logo": "assets/sponsors/165th-floor.png",
       "url": null,
       "description": "165th Floor is a UK-based contemporary apparel label that emphasises premium heavyweight fabrics and relaxed silhouettes.<br><br>Their collection features robust hoodies, straight-leg trousers and bold tees — items crafted to deliver both comfort and style.<br><br>Founded by YouTubers Calfreezy and TheBurntChip, 165th Floor has put its faith in the Stags for this season, taking its place on the sleeve and the back of the shorts.",
       "social": {}
@@ -20,7 +20,7 @@
     {
       "name": "ABVloggin",
       "tier": "Away Kit Sponsor",
-      "logo": null,
+      "logo": "assets/sponsors/abvloggin.png",
       "url": null,
       "description": "AB is a UK content creator from Harrogate who makes skits on TikTok and vlogs on YouTube. He's also the third host on The Fellas Podcast, who also sponsor the Stags.<br><br>We're delighted to have AB on board — his YouTube username is brandished front and centre of our away kit, and his iconic catchphrase also features on the back of the neck of the away shirt.",
       "social": {}
@@ -28,7 +28,7 @@
     {
       "name": "WLPH",
       "tier": "Shirt Sponsor",
-      "logo": null,
+      "logo": "assets/sponsors/wlph.png",
       "url": null,
       "description": "WLPH is a family-run plumbing and heating business with over 35 years servicing the London area.<br><br>West London Plumbing & Heating are delighted to support Hillingdon Stags this season as shirt sponsors, and wish the squad a strong and successful campaign.",
       "social": {}
