@@ -31,7 +31,7 @@ document.addEventListener("stags:ready", async () => {
     loadJSON("data/results.json")
   ]);
   if (!squadData) return;
-  const results = resultsData ? await enrichResultsFromSheets(resultsData.results) : null;
+  const results = resultsData ? await enrichResultsFromSheets(resultsData.results, squadData.squad) : null;
   const squad = results ? applySeasonRatings(squadData.squad, results) : squadData.squad;
   renderSquad(document.getElementById("squad"), squad);
 });

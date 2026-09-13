@@ -38,15 +38,14 @@ document.addEventListener("stags:ready", async () => {
     loadJSON("data/results.json"),
     loadJSON("data/squad.json")
   ]);
-  const results = resultsData ? await enrichResultsFromSheets(resultsData.results) : [];
+  const results = resultsData ? await enrichResultsFromSheets(resultsData.results, squadData ? squadData.squad : null) : [];
 
   // Top scorers: computed from the ratings sheet's goal markers (⚽), same
   // source as the results page — not a separate Mitoo scrape.
   const scorers = squadData ? seasonScorersList(squadData.squad, results) : [];
   renderScorers(document.getElementById("scorers"), { scorers }, "scorers", "Goals");
 
-  // MOTM: derived from each result's motm field (set by hand in the reports
-  // sheet, if Stanley starts recording it).
+  // MOTM: derived from the ratings sheet's ⭐ marker.
   const counts = {};
   for (const r of results) {
     if (r.motm) counts[r.motm] = (counts[r.motm] || 0) + 1;

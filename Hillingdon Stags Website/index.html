@@ -83,28 +83,32 @@
 <script src="js/main-v2.js"></script>
 <script>
 document.addEventListener("stags:ready", async () => {
-  const [fixtures, results, table, scorers, sponsors, gallery] = await Promise.all([
+  const [fixtures, resultsData, table, squadData, sponsors, gallery] = await Promise.all([
     loadJSON("data/fixtures.json"),
     loadJSON("data/results.json"),
     loadJSON("data/table.json"),
-    loadJSON("data/scorers.json"),
+    loadJSON("data/squad.json"),
     loadJSON("data/sponsors.json"),
     loadJSON("data/gallery.json")
   ]);
+  const results = resultsData
+    ? await enrichResultsFromSheets(resultsData.results, squadData ? squadData.squad : null)
+    : null;
 
   if (fixtures) renderNextFixture(document.getElementById("next-fixture"), fixtures.fixtures);
-  if (results) renderLastResult(document.getElementById("last-result"), results.results);
+  if (results) renderLastResult(document.getElementById("last-result"), results);
   if (table) renderPosition(document.getElementById("position"), table.table);
-  if (results) renderForm(document.getElementById("form-row"), results.results);
+  if (results) renderForm(document.getElementById("form-row"), results);
   if (sponsors) renderSponsors(document.getElementById("sponsors-strip"), sponsors.sponsors, { compact: true });
   if (gallery) renderGalleryPreview(document.getElementById("gallery-preview"), gallery.matches);
 
-  // top 3 scorers preview
-  if (scorers) {
+  // top 3 scorers preview — same source as the Top Scorers page
+  if (squadData && results) {
+    const scorers = seasonScorersList(squadData.squad, results).slice(0, 3);
     const slot = document.getElementById("scorers-mini");
     slot.innerHTML = `
       <div class="card-grid">
-        ${scorers.scorers.slice(0,3).map(p => `
+        ${scorers.map(p => `
           <div class="card">
             <h3>${p.name}</h3>
             <div style="display:flex; align-items:baseline; justify-content:space-between;">

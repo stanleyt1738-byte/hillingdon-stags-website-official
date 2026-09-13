@@ -175,7 +175,7 @@ function sheetKey(date, opponent) {
 }
 
 // Parses one pasted rating line, e.g. "Gam - 7.8 ⚽⚽" or "Max - 3.5 🅰️".
-// Markers: ⚽ per goal scored, 🅰️ per assist, 🚑 went off injured.
+// Markers: ⚽ per goal scored, 🅰️ per assist, 🚑 went off injured, ⭐ MOTM.
 function parseRatingLine(raw) {
   const text = (raw || "").trim();
   if (!text) return null;
@@ -187,8 +187,28 @@ function parseRatingLine(raw) {
     rating: parseFloat(m[2]),
     goals: (markers.match(/⚽/g) || []).length,
     assists: (markers.match(/🅰️?/g) || []).length,
-    injured: markers.includes("🚑")
+    injured: markers.includes("🚑"),
+    motm: markers.includes("⭐")
   };
+}
+
+// Resolves a raw sheet name (e.g. "Gam", "Stan T") to the matching squad
+// member's full name via ratingsName, falling back to the raw name.
+function resolvePlayerName(rawName, squad) {
+  if (!squad || !squad.length) return rawName;
+  const lower = rawName.trim().toLowerCase();
+  const match = squad.find(p => (p.ratingsName || p.name).toLowerCase() === lower);
+  return match ? match.name : rawName;
+}
+
+// Resolves a standalone "F.Surname" style name (used for a MOTM line on its
+// own, separate from the "Name - Rating" list) by matching surname.
+function resolveBySurname(rawName, squad) {
+  if (!squad || !squad.length) return rawName;
+  const surname = rawName.replace(/^[A-Za-z]\.\s*/, "").trim().toLowerCase();
+  if (!surname) return rawName;
+  const match = squad.find(p => p.name.toLowerCase().split(" ").pop() === surname);
+  return match ? match.name : rawName;
 }
 
 function scorersFromRatings(ratings) {
@@ -197,11 +217,12 @@ function scorersFromRatings(ratings) {
     .map(p => (p.goals > 1 ? `${p.name} (${p.goals})` : p.name));
 }
 
-// Merges hand-entered report/reportTitle/playerRatings from the published
+// Merges hand-entered report/reportTitle/playerRatings/motm from the published
 // Sheets onto matching results (matched by date + opponent). Falls back to
 // whatever's already on the result object (e.g. manually edited in results.json)
-// if a match isn't found in the sheets.
-async function enrichResultsFromSheets(results) {
+// if a match isn't found in the sheets. Pass `squad` (data/squad.json's
+// `squad` array) so sheet nicknames resolve to full display names.
+async function enrichResultsFromSheets(results, squad) {
   if (!results || !results.length) return results;
   const [reportRows, ratingRows] = await Promise.all([
     loadCSV(SHEET_URLS.reports),
@@ -220,24 +241,41 @@ async function enrichResultsFromSheets(results) {
   // Ratings sheet: one row per match (Date, Opponent, RawBlock), where
   // RawBlock is the whole pasted ratings list as a single cell — paste it in
   // by entering the cell first (Enter/F2) so the paste lands as one multi-line
-  // value instead of spilling across rows.
+  // value instead of spilling across rows. MOTM is either a ⭐ on a player's
+  // own rating line, or its own line (e.g. "⭐ J.Garnham") matched by surname.
   const ratingsByKey = new Map();
+  const motmByKey = new Map();
   ratingRows.forEach(row => {
     if (!row.Date || !row.Opponent || !row.RawBlock) return;
+    const key = sheetKey(row.Date, row.Opponent);
     const lines = row.RawBlock.split(/\r\n|\r|\n/).map(l => l.trim()).filter(Boolean);
-    const parsed = lines.map(parseRatingLine).filter(Boolean);
-    if (parsed.length) ratingsByKey.set(sheetKey(row.Date, row.Opponent), parsed);
+    const parsed = [];
+    lines.forEach(line => {
+      const rl = parseRatingLine(line);
+      if (rl) {
+        const resolvedName = resolvePlayerName(rl.name, squad);
+        parsed.push({ ...rl, name: resolvedName });
+        if (rl.motm) motmByKey.set(key, resolvedName);
+        return;
+      }
+      if (line.includes("⭐") && !motmByKey.has(key)) {
+        motmByKey.set(key, resolveBySurname(line.replace(/⭐/g, "").trim(), squad));
+      }
+    });
+    if (parsed.length) ratingsByKey.set(key, parsed);
   });
 
   return results.map(r => {
     const k = sheetKey(r.date, opponentOf(r));
     const rep = reportsByKey.get(k);
     const ratings = ratingsByKey.get(k);
+    const motm = motmByKey.get(k);
     return {
       ...r,
       ...(rep && rep.report ? { report: rep.report, reportTitle: rep.reportTitle } : {}),
       ...(ratings ? { playerRatings: ratings } : {}),
-      ...(ratings && !(r.scorers && r.scorers.length) ? { scorers: scorersFromRatings(ratings) } : {})
+      ...(ratings && !(r.scorers && r.scorers.length) ? { scorers: scorersFromRatings(ratings) } : {}),
+      ...(motm && !r.motm ? { motm } : {})
     };
   });
 }
@@ -449,10 +487,12 @@ function computeSeasonRatings(results) {
   return averages;
 }
 
+// results' playerRatings are already resolved to full squad names by
+// enrichResultsFromSheets, so this matches on p.name directly.
 function applySeasonRatings(squad, results) {
   const averages = computeSeasonRatings(results);
   return squad.map(p => {
-    const stats = averages[p.ratingsName || p.name];
+    const stats = averages[p.name];
     if (!stats) return p;
     return { ...p, avgRating: Math.round(stats.avg * 10) / 10 };
   });
@@ -472,7 +512,7 @@ function seasonScorersList(squad, results) {
   });
   return squad
     .map(p => {
-      const t = totals[p.ratingsName || p.name];
+      const t = totals[p.name];
       if (!t || !t.goals) return null;
       return { name: p.name, goals: t.goals, apps: t.apps };
     })

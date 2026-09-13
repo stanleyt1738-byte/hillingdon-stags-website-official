@@ -26,9 +26,12 @@
 <script src="js/main-v2.js"></script>
 <script>
 document.addEventListener("stags:ready", async () => {
-  const data = await loadJSON("data/results.json");
+  const [data, squadData] = await Promise.all([
+    loadJSON("data/results.json"),
+    loadJSON("data/squad.json")
+  ]);
   if (!data) return;
-  const results = await enrichResultsFromSheets(data.results);
+  const results = await enrichResultsFromSheets(data.results, squadData ? squadData.squad : null);
   renderResultsList(document.getElementById("results-list"), results);
 });
 </script>
