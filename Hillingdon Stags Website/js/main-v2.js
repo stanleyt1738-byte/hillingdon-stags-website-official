@@ -458,6 +458,28 @@ function applySeasonRatings(squad, results) {
   });
 }
 
+// Season goals leaderboard, built from the same per-match playerRatings
+// (goal markers) rather than a separate Mitoo scrape — keeps one source of
+// truth and avoids reconciling Mitoo's abbreviated "Surname Initial" names.
+function seasonScorersList(squad, results) {
+  const totals = {};
+  (results || []).forEach(r => {
+    (r.playerRatings || []).forEach(pr => {
+      if (!totals[pr.name]) totals[pr.name] = { goals: 0, apps: 0 };
+      totals[pr.name].apps += 1;
+      totals[pr.name].goals += pr.goals || 0;
+    });
+  });
+  return squad
+    .map(p => {
+      const t = totals[p.ratingsName || p.name];
+      if (!t || !t.goals) return null;
+      return { name: p.name, goals: t.goals, apps: t.apps };
+    })
+    .filter(Boolean)
+    .sort((a, b) => b.goals - a.goals);
+}
+
 /* ===== Render: league table ===== */
 function renderLeagueTable(slot, table) {
   if (!slot || !table) return;

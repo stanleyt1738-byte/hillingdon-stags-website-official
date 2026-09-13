@@ -34,27 +34,27 @@
 <script src="js/main-v2.js"></script>
 <script>
 document.addEventListener("stags:ready", async () => {
-  const [data, resultsData] = await Promise.all([
-    loadJSON("data/scorers.json"),
-    loadJSON("data/results.json")
+  const [resultsData, squadData] = await Promise.all([
+    loadJSON("data/results.json"),
+    loadJSON("data/squad.json")
   ]);
-  if (data) {
-    renderScorers(document.getElementById("scorers"), data, "scorers", "Goals");
+  const results = resultsData ? await enrichResultsFromSheets(resultsData.results) : [];
 
-    // Derive MOTM counts from results if scorers.json motm is empty
-    let motmSource = data;
-    if ((!data.motm || !data.motm.length) && resultsData && resultsData.results) {
-      const counts = {};
-      for (const r of resultsData.results) {
-        if (r.motm) counts[r.motm] = (counts[r.motm] || 0) + 1;
-      }
-      const motm = Object.entries(counts)
-        .map(([name, awards]) => ({ name, awards }))
-        .sort((a, b) => b.awards - a.awards);
-      motmSource = { ...data, motm };
-    }
-    renderScorers(document.getElementById("motm"), motmSource, "motm", "Awards");
+  // Top scorers: computed from the ratings sheet's goal markers (⚽), same
+  // source as the results page — not a separate Mitoo scrape.
+  const scorers = squadData ? seasonScorersList(squadData.squad, results) : [];
+  renderScorers(document.getElementById("scorers"), { scorers }, "scorers", "Goals");
+
+  // MOTM: derived from each result's motm field (set by hand in the reports
+  // sheet, if Stanley starts recording it).
+  const counts = {};
+  for (const r of results) {
+    if (r.motm) counts[r.motm] = (counts[r.motm] || 0) + 1;
   }
+  const motm = Object.entries(counts)
+    .map(([name, awards]) => ({ name, awards }))
+    .sort((a, b) => b.awards - a.awards);
+  renderScorers(document.getElementById("motm"), { motm }, "motm", "Awards");
 });
 </script>
 
