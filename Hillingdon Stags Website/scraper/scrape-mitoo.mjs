@@ -7,7 +7,7 @@
      node scraper/scrape-mitoo.mjs
    ============================================================ */
 
-import { writeFile } from "node:fs/promises";
+import { writeFile, readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import * as cheerio from "cheerio";
@@ -17,20 +17,25 @@ const __dirname = dirname(__filename);
 const DATA_DIR = resolve(__dirname, "..", "data");
 
 const TEAM_NAME = "Hillingdon Stags";
-const TEAM_CI = "4870";  // Mitoo team ID for Hillingdon Stags
 const SEASON = "2026/27";
+const DIVISION_LABEL = "Division Three";
 
 const BASE = "https://www.mitoofootball.com";
 const DIVISION_ID = "4";
 const LEAGUE_CODE = "MDXS2026";
 
+// Season runs August through May — sweep every month so the whole
+// season's fixtures/results get picked up regardless of when this runs.
+const SEASON_MONTHS = [8, 9, 10, 11, 12, 1, 2, 3, 4, 5];
+
 // Mitoo URLs we scrape
 const PAGES = {
   // League table — confirmed structure: <table class="leagueTable"> with <tr class="bg_highlight0">
   table: `${BASE}/LeagueTab.cfm?TblName=Matches&DivisionID=${DIVISION_ID}&LeagueCode=${LEAGUE_CODE}`,
-  // Team history — all fixtures and results for our team in one page
-  teamHistory: `${BASE}/TeamHist.cfm?CI=${TEAM_CI}&DivisionID=${DIVISION_ID}&TblName=Matches&LeagueCode=${LEAGUE_CODE}`,
-  // Per-month fixtures and results across the whole division (fallback)
+  // Whole-division fixtures/results for a given month. NOTE: the old TeamHist.cfm /
+  // TeamHistAll.cfm "team history" endpoints throw a server-side error on Mitoo
+  // (missing OrdinalID param) — confirmed broken as of 2026-09-13, and every past
+  // scrape using them silently produced empty fixtures/results. This page works.
   monthFixtures: (m) => `${BASE}/FixtResMonth.cfm?TblName=Matches&DivisionID=${DIVISION_ID}&LeagueCode=${LEAGUE_CODE}&MonthNo=${m}`
 };
 
@@ -54,7 +59,7 @@ function parseUKDate(str) {
   // Guess year: anything July+ = current year start of season; Jan-Jun = following year
   const now = new Date();
   let year = now.getFullYear();
-  const seasonStartYear = parseInt(SEASON.split("/")[0], 10) + 2000;
+  const seasonStartYear = parseInt(SEASON.split("/")[0], 10);
   if (!isNaN(seasonStartYear)) {
     year = (month >= 7) ? seasonStartYear : seasonStartYear + 1;
   } else if (month < 7 && now.getMonth() > 6) {
@@ -117,58 +122,101 @@ function parseTablePage(html) {
   return rows;
 }
 
-/* --------- Scrape: team history (Stags fixtures + results) ---------
-   On the TeamHist page, matches are listed with date, opponent, score (or "v" for upcoming),
-   home/away indicator, and venue. We detect score-shaped text to split fixtures vs results.
+/* --------- Scrape: one month of division fixtures/results ---------
+   Mitoo HTML structure (confirmed from live page, 2026-09-13):
+     <a href="MtchDay.cfm?...">Sunday, 13 September 2026</a>   <- date header row
+     <tr class="bg_contrast">
+       <td width="35"><span class="pix13bold">3</span></td>    <- home goals (blank if unplayed)
+       <td width="35"><span class="pix13bold">7</span></td>    <- away goals (blank if unplayed)
+       <td>
+         <span class="pix13bold">Hillingdon Stags</span> <span class="pix13">v</span> <span class="pix13bold">Richmond Saints</span>
+         <span class="pix10navy">Bedfont Football & Social Club</span>   <- venue
+       </td>
+       ...referee...
+     </tr>
+   We walk rows in document order, tracking the most recent date header, and
+   only keep rows involving TEAM_NAME.
 */
-function parseTeamHistory(html) {
+function parseFixtResMonth(html) {
   const $ = cheerio.load(html);
   const fixtures = [];
   const results = [];
+  let currentDate = null;
 
-  $("table tr").each((_, tr) => {
-    const cells = $(tr).find("td").map((_, td) => clean($(td).text())).get();
-    if (cells.length < 4) return;
-    const text = cells.join(" | ");
-    // Find an ISO-ish or DD MMM date
-    const isoDate = parseUKDate(text);
-    if (!isoDate) return;
+  $("tr").each((_, tr) => {
+    const $tr = $(tr);
 
-    const scoreMatch = text.match(/(\d+)\s*[-–]\s*(\d+)/);
-    // Find opponent — assume first cell with a recognisable team name (not Stags, not date, not score)
-    const opponentCells = cells.filter(c =>
-      c && !/^\d/.test(c) && !/^v$/i.test(c) && c.toLowerCase() !== TEAM_NAME.toLowerCase());
+    const dateSpan = $tr.find('a[href*="MtchDay.cfm"] span.pix13bold').first();
+    if (dateSpan.length) {
+      currentDate = parseUKDate(clean(dateSpan.text()));
+      return;
+    }
 
-    if (scoreMatch) {
-      const [_, hg, ag] = scoreMatch;
-      // Detect home/away — usually the home team is listed first
-      const stagsFirst = text.toLowerCase().indexOf(TEAM_NAME.toLowerCase()) < (opponentCells[0] ? text.toLowerCase().indexOf(opponentCells[0].toLowerCase()) : Infinity);
-      const opponent = opponentCells.find(c => c.toLowerCase() !== TEAM_NAME.toLowerCase()) || "";
+    if (!$tr.hasClass("bg_contrast") || !currentDate) return;
+
+    const scoreCells = $tr.find('td[width="35"] span.pix13bold');
+    if (scoreCells.length < 2) return;
+    const homeGoalsRaw = clean($(scoreCells[0]).text());
+    const awayGoalsRaw = clean($(scoreCells[1]).text());
+
+    const teamSpans = $tr.find("span.pix13bold").slice(2); // skip the two score spans
+    const home = clean(teamSpans.eq(0).text());
+    const away = clean(teamSpans.eq(1).text());
+    if (!home || !away) return;
+    if (home !== TEAM_NAME && away !== TEAM_NAME) return;
+
+    const venue = clean($tr.find("span.pix10navy").first().text());
+
+    if (homeGoalsRaw !== "" && awayGoalsRaw !== "") {
       results.push({
-        date: isoDate,
-        home: stagsFirst ? TEAM_NAME : opponent,
-        homeGoals: parseInt(stagsFirst ? hg : ag, 10),
-        away: stagsFirst ? opponent : TEAM_NAME,
-        awayGoals: parseInt(stagsFirst ? ag : hg, 10),
+        date: currentDate,
+        competition: DIVISION_LABEL,
+        home,
+        homeGoals: parseInt(homeGoalsRaw, 10),
+        away,
+        awayGoals: parseInt(awayGoalsRaw, 10),
+        venue,
         scorers: [],
         motm: null
       });
-    } else if (/\sv\s/i.test(text)) {
-      const opponent = opponentCells.find(c => c.toLowerCase() !== TEAM_NAME.toLowerCase()) || "";
-      const stagsFirst = text.toLowerCase().indexOf(TEAM_NAME.toLowerCase()) < text.toLowerCase().indexOf(opponent.toLowerCase());
-      const time = (text.match(/\b(\d{1,2}[:\.]\d{2})\b/) || [])[1] || "10:30";
+    } else {
+      const kickoffMatch = clean($tr.text()).match(/\b(\d{1,2}:\d{2}\s?[AP]M)\b/i);
       fixtures.push({
-        date: isoDate,
-        kickoff: time.replace(".", ":"),
-        home: stagsFirst ? TEAM_NAME : opponent,
-        away: stagsFirst ? opponent : TEAM_NAME,
-        venue: "",
-        competition: "League"
+        date: currentDate,
+        kickoff: kickoffMatch ? kickoffMatch[1] : "10:30 AM",
+        home,
+        away,
+        venue,
+        competition: DIVISION_LABEL
       });
     }
   });
 
   return { fixtures, results };
+}
+
+/* --------- Merge freshly scraped results with hand-added extras ---------
+   scorers/motm/report/playerRatings get added by hand after the fact —
+   don't let a re-scrape wipe them for a match we already have on file.
+*/
+function mergeResults(freshResults, previousResults) {
+  const keyOf = (r) => `${r.date}|${r.home}|${r.away}`;
+  const previousByKey = new Map((previousResults || []).map(r => [keyOf(r), r]));
+
+  return freshResults.map(r => {
+    const prev = previousByKey.get(keyOf(r));
+    if (!prev) return r;
+    return { ...r, scorers: prev.scorers?.length ? prev.scorers : r.scorers, motm: prev.motm ?? r.motm, ...(prev.report ? { report: prev.report } : {}), ...(prev.reportTitle ? { reportTitle: prev.reportTitle } : {}), ...(prev.playerRatings ? { playerRatings: prev.playerRatings } : {}) };
+  });
+}
+
+async function readPreviousJson(filename) {
+  try {
+    const raw = await readFile(resolve(DATA_DIR, filename), "utf8");
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
 }
 
 /* --------- Save helper --------- */
@@ -202,30 +250,39 @@ async function main() {
     console.warn("Table page failed:", e.message);
   }
 
-  // 2. Team history — Stags fixtures and results
-  try {
-    const html = await fetchHtml(PAGES.teamHistory);
-    const { fixtures, results } = parseTeamHistory(html);
-    console.log(`Team history: ${fixtures.length} fixtures, ${results.length} results`);
+  // 2. Fixtures and results — swept month by month across the whole season
+  const allFixtures = [];
+  const allResults = [];
+  const monthUrls = SEASON_MONTHS.map(PAGES.monthFixtures);
 
-    if (fixtures.length) {
-      await saveJson("fixtures.json", {
-        lastUpdated: now,
-        source: PAGES.teamHistory,
-        fixtures: fixtures.sort((a, b) => a.date.localeCompare(b.date))
-      });
+  for (const url of monthUrls) {
+    try {
+      const html = await fetchHtml(url);
+      const { fixtures, results } = parseFixtResMonth(html);
+      allFixtures.push(...fixtures);
+      allResults.push(...results);
+    } catch (e) {
+      console.warn(`Month page failed (${url}):`, e.message);
     }
-
-    if (results.length) {
-      await saveJson("results.json", {
-        lastUpdated: now,
-        source: PAGES.teamHistory,
-        results: results.sort((a, b) => b.date.localeCompare(a.date))
-      });
-    }
-  } catch (e) {
-    console.warn("Team history page failed:", e.message);
   }
+  console.log(`Fixtures/results sweep: ${allFixtures.length} fixtures, ${allResults.length} results`);
+
+  const monthSource = `${BASE}/FixtResMonth.cfm?TblName=Matches&DivisionID=${DIVISION_ID}&LeagueCode=${LEAGUE_CODE}&MonthNo={8..12,1..5}`;
+
+  const previousResults = await readPreviousJson("results.json");
+  const mergedResults = mergeResults(allResults, previousResults?.results);
+
+  await saveJson("fixtures.json", {
+    lastUpdated: now,
+    source: monthSource,
+    fixtures: allFixtures.sort((a, b) => a.date.localeCompare(b.date))
+  });
+
+  await saveJson("results.json", {
+    lastUpdated: now,
+    source: monthSource,
+    results: mergedResults.sort((a, b) => b.date.localeCompare(a.date))
+  });
 
   console.log("Done.");
 }

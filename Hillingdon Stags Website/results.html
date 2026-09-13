@@ -27,7 +27,9 @@
 <script>
 document.addEventListener("stags:ready", async () => {
   const data = await loadJSON("data/results.json");
-  if (data) renderResultsList(document.getElementById("results-list"), data.results);
+  if (!data) return;
+  const results = await enrichResultsFromSheets(data.results);
+  renderResultsList(document.getElementById("results-list"), results);
 });
 </script>
 

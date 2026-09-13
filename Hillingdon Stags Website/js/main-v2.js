@@ -99,6 +99,149 @@ async function loadJSON(path) {
   }
 }
 
+/* ===== Google Sheets integration (match reports + player ratings) =====
+   Stanley fills in a report + player ratings per match in two Google Sheets,
+   then Sheets > File > Share > Publish to web > CSV for each. Paste the
+   published CSV URLs below. Leave blank to skip (site just won't show
+   reports/ratings until they're set).
+*/
+const SHEET_URLS = {
+  reports: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ3bvsatenxtgf67m0o2k-ZIriO8lyQwzmIylnOVYUj3PJjd03y1H4Th6UYaS-5lqMm2rpazsBYD1rJ/pub?output=csv",
+  ratings: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQFSQLpUvFmhVDtHgWzJMwKwjRyA8fXad0k--1-h-zgUorA6M4kaWxYq8e5L-D6-oWU1q9lANGYeCeM/pub?output=csv"
+};
+
+// Splits CSV text into raw rows (arrays of fields), preserving blank interior
+// rows — needed so the ratings sheet can use a blank row as a block separator.
+// Only a genuine trailing empty row (an artifact of the file's final newline)
+// gets dropped.
+function parseCSVRows(text) {
+  const rows = [];
+  let row = [], field = "", inQuotes = false;
+  const pushField = () => { row.push(field); field = ""; };
+  const pushRow = () => { pushField(); rows.push(row); row = []; };
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (inQuotes) {
+      if (c === '"') {
+        if (text[i + 1] === '"') { field += '"'; i++; }
+        else inQuotes = false;
+      } else field += c;
+    } else if (c === '"') {
+      inQuotes = true;
+    } else if (c === ",") {
+      pushField();
+    } else if (c === "\n" || c === "\r") {
+      if (c === "\r" && text[i + 1] === "\n") i++;
+      pushRow();
+    } else {
+      field += c;
+    }
+  }
+  if (field !== "" || row.length) pushRow();
+  if (rows.length && rows[rows.length - 1].every(f => f === "")) rows.pop();
+  return rows;
+}
+
+function parseCSV(text) {
+  const rows = parseCSVRows(text).filter(r => !(r.length === 1 && r[0] === ""));
+  if (!rows.length) return [];
+  const headers = rows[0].map(h => h.trim());
+  return rows.slice(1).map(r => Object.fromEntries(headers.map((h, i) => [h, (r[i] || "").trim()])));
+}
+
+async function loadCSV(url) {
+  if (!url) return [];
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`Failed to load ${url}: ${res.status}`);
+    return parseCSV(await res.text());
+  } catch (e) {
+    console.warn("Sheet load failed:", e);
+    return [];
+  }
+}
+
+function opponentOf(result) {
+  return isStags(result.home) ? result.away : result.home;
+}
+
+// Strips a trailing "(H)"/"(A)" home/away marker, e.g. "Richmond Saints (H)".
+function normalizeOpponent(name) {
+  return (name || "").replace(/\s*\([HhAa]\)\s*$/, "").trim();
+}
+
+function sheetKey(date, opponent) {
+  return `${(date || "").trim()}|${normalizeOpponent(opponent).toLowerCase()}`;
+}
+
+// Parses one pasted rating line, e.g. "Gam - 7.8 ⚽⚽" or "Max - 3.5 🅰️".
+// Markers: ⚽ per goal scored, 🅰️ per assist, 🚑 went off injured.
+function parseRatingLine(raw) {
+  const text = (raw || "").trim();
+  if (!text) return null;
+  const m = text.match(/^(.+?)\s*-?\s*(\d+(?:\.\d+)?)\s*(.*)$/);
+  if (!m) return null;
+  const markers = m[3] || "";
+  return {
+    name: m[1].trim(),
+    rating: parseFloat(m[2]),
+    goals: (markers.match(/⚽/g) || []).length,
+    assists: (markers.match(/🅰️?/g) || []).length,
+    injured: markers.includes("🚑")
+  };
+}
+
+function scorersFromRatings(ratings) {
+  return (ratings || [])
+    .filter(p => p.goals > 0)
+    .map(p => (p.goals > 1 ? `${p.name} (${p.goals})` : p.name));
+}
+
+// Merges hand-entered report/reportTitle/playerRatings from the published
+// Sheets onto matching results (matched by date + opponent). Falls back to
+// whatever's already on the result object (e.g. manually edited in results.json)
+// if a match isn't found in the sheets.
+async function enrichResultsFromSheets(results) {
+  if (!results || !results.length) return results;
+  const [reportRows, ratingRows] = await Promise.all([
+    loadCSV(SHEET_URLS.reports),
+    loadCSV(SHEET_URLS.ratings)
+  ]);
+
+  const reportsByKey = new Map();
+  reportRows.forEach(row => {
+    if (!row.Date || !row.Opponent) return;
+    reportsByKey.set(sheetKey(row.Date, row.Opponent), {
+      report: row.Report || "",
+      reportTitle: row.ReportTitle || ""
+    });
+  });
+
+  // Ratings sheet: one row per match (Date, Opponent, RawBlock), where
+  // RawBlock is the whole pasted ratings list as a single cell — paste it in
+  // by entering the cell first (Enter/F2) so the paste lands as one multi-line
+  // value instead of spilling across rows.
+  const ratingsByKey = new Map();
+  ratingRows.forEach(row => {
+    if (!row.Date || !row.Opponent || !row.RawBlock) return;
+    const lines = row.RawBlock.split(/\r\n|\r|\n/).map(l => l.trim()).filter(Boolean);
+    const parsed = lines.map(parseRatingLine).filter(Boolean);
+    if (parsed.length) ratingsByKey.set(sheetKey(row.Date, row.Opponent), parsed);
+  });
+
+  return results.map(r => {
+    const k = sheetKey(r.date, opponentOf(r));
+    const rep = reportsByKey.get(k);
+    const ratings = ratingsByKey.get(k);
+    return {
+      ...r,
+      ...(rep && rep.report ? { report: rep.report, reportTitle: rep.reportTitle } : {}),
+      ...(ratings ? { playerRatings: ratings } : {}),
+      ...(ratings && !(r.scorers && r.scorers.length) ? { scorers: scorersFromRatings(ratings) } : {})
+    };
+  });
+}
+
 /* ===== Date helpers ===== */
 function fmtDate(iso, opts = {}) {
   if (!iso) return "";
@@ -268,16 +411,51 @@ function renderResultsList(slot, results) {
         ${r.scorers && r.scorers.length ? (r.note ? " &middot; " : "") + "&#9917; " + r.scorers.join(", ") : ""}
         ${r.motm ? " &middot; MOTM: " + r.motm : ""}
       </div>
-      ${r.report ? `
+      ${(r.report || (r.playerRatings && r.playerRatings.length)) ? `
       <details class="report-drop">
-        <summary>Match Report</summary>
+        <summary>Match Report &amp; Ratings</summary>
         <div class="report-body">
           ${r.reportTitle ? `<p class="report-title">${r.reportTitle}</p>` : ""}
-          <p>${r.report}</p>
+          ${r.report ? `<p>${r.report}</p>` : ""}
+          ${r.playerRatings && r.playerRatings.length ? `
+          <div class="ratings-grid">
+            ${[...r.playerRatings].sort((a, b) => b.rating - a.rating).map(pr => `
+              <div class="rating-chip">
+                <span class="rating-name">${pr.name}${pr.goals ? " " + "⚽".repeat(pr.goals) : ""}${pr.assists ? " " + "🅰️".repeat(pr.assists) : ""}${pr.injured ? " 🚑" : ""}</span>
+                <span class="rating-score">${pr.rating.toFixed(1)}</span>
+              </div>
+            `).join("")}
+          </div>` : ""}
         </div>
       </details>` : ""}
     </div>`;
   }).join("");
+}
+
+/* ===== Season rating averages (computed from results.json playerRatings) ===== */
+function computeSeasonRatings(results) {
+  const totals = {};
+  (results || []).forEach(r => {
+    (r.playerRatings || []).forEach(pr => {
+      if (!totals[pr.name]) totals[pr.name] = { sum: 0, count: 0 };
+      totals[pr.name].sum += pr.rating;
+      totals[pr.name].count += 1;
+    });
+  });
+  const averages = {};
+  Object.keys(totals).forEach(name => {
+    averages[name] = { avg: totals[name].sum / totals[name].count, apps: totals[name].count };
+  });
+  return averages;
+}
+
+function applySeasonRatings(squad, results) {
+  const averages = computeSeasonRatings(results);
+  return squad.map(p => {
+    const stats = averages[p.ratingsName || p.name];
+    if (!stats) return p;
+    return { ...p, avgRating: Math.round(stats.avg * 10) / 10 };
+  });
 }
 
 /* ===== Render: league table ===== */

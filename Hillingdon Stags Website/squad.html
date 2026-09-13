@@ -26,8 +26,14 @@
 <script src="js/main-v2.js"></script>
 <script>
 document.addEventListener("stags:ready", async () => {
-  const data = await loadJSON("data/squad.json");
-  if (data) renderSquad(document.getElementById("squad"), data.squad);
+  const [squadData, resultsData] = await Promise.all([
+    loadJSON("data/squad.json"),
+    loadJSON("data/results.json")
+  ]);
+  if (!squadData) return;
+  const results = resultsData ? await enrichResultsFromSheets(resultsData.results) : null;
+  const squad = results ? applySeasonRatings(squadData.squad, results) : squadData.squad;
+  renderSquad(document.getElementById("squad"), squad);
 });
 </script>
 

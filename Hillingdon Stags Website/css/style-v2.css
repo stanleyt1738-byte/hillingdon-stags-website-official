@@ -502,6 +502,34 @@ nav.primary a.active {
   margin-bottom: 0.5rem;
 }
 
+.report-drop .ratings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.report-drop .rating-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  background: var(--stag-grey-100, #f4f4f4);
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.report-drop .rating-name {
+  color: var(--stag-grey-700);
+}
+
+.report-drop .rating-score {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--stag-gold-dark);
+}
+
 /* ===== Buttons ===== */
 .btn {
   display: inline-block;
