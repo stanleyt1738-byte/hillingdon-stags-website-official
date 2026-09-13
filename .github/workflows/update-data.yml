@@ -19,11 +19,11 @@ jobs:
           node-version: 20
 
       - name: Install scraper deps
-        working-directory: scraper
+        working-directory: "Hillingdon Stags Website/scraper"
         run: npm install --no-audit --no-fund
 
       - name: Run scraper
-        working-directory: scraper
+        working-directory: "Hillingdon Stags Website/scraper"
         run: node scrape-mitoo.mjs
 
       - name: Commit updated data
