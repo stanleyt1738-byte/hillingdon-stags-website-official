@@ -269,20 +269,31 @@ async function main() {
 
   const monthSource = `${BASE}/FixtResMonth.cfm?TblName=Matches&DivisionID=${DIVISION_ID}&LeagueCode=${LEAGUE_CODE}&MonthNo={8..12,1..5}`;
 
+  const previousFixtures = await readPreviousJson("fixtures.json");
   const previousResults = await readPreviousJson("results.json");
-  const mergedResults = mergeResults(allResults, previousResults?.results);
+  const hadPreviousData = (previousFixtures?.fixtures?.length || 0) > 0 || (previousResults?.results?.length || 0) > 0;
 
-  await saveJson("fixtures.json", {
-    lastUpdated: now,
-    source: monthSource,
-    fixtures: allFixtures.sort((a, b) => a.date.localeCompare(b.date))
-  });
+  // A sweep across the whole season returning nothing at all almost always means
+  // the fetch got blocked/challenged (e.g. Mitoo rejecting the runner's IP) rather
+  // than the club genuinely having zero fixtures and zero results all season —
+  // don't let that silently wipe out good data (see incident 2026-09-15).
+  if (allFixtures.length === 0 && allResults.length === 0 && hadPreviousData) {
+    console.warn("Fixtures/results sweep returned nothing but previous data exists — skipping write to avoid wiping good data.");
+  } else {
+    const mergedResults = mergeResults(allResults, previousResults?.results);
 
-  await saveJson("results.json", {
-    lastUpdated: now,
-    source: monthSource,
-    results: mergedResults.sort((a, b) => b.date.localeCompare(a.date))
-  });
+    await saveJson("fixtures.json", {
+      lastUpdated: now,
+      source: monthSource,
+      fixtures: allFixtures.sort((a, b) => a.date.localeCompare(b.date))
+    });
+
+    await saveJson("results.json", {
+      lastUpdated: now,
+      source: monthSource,
+      results: mergedResults.sort((a, b) => b.date.localeCompare(a.date))
+    });
+  }
 
   console.log("Done.");
 }
