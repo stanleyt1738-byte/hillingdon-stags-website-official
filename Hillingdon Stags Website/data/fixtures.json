@@ -1,15 +1,7 @@
 {
-  "lastUpdated": "2026-09-15T09:40:20.328Z",
+  "lastUpdated": "2026-09-21T16:54:13.555Z",
   "source": "https://www.mitoofootball.com/FixtResMonth.cfm?TblName=Matches&DivisionID=4&LeagueCode=MDXS2026&MonthNo={8..12,1..5}",
   "fixtures": [
-    {
-      "date": "2026-09-20",
-      "kickoff": "10:30 AM",
-      "home": "London Tigers",
-      "away": "Hillingdon Stags",
-      "venue": "London Tigers Sports Complex",
-      "competition": "Division Three"
-    },
     {
       "date": "2026-09-27",
       "kickoff": "10:30 AM",
@@ -24,6 +16,14 @@
       "home": "Moor Mead",
       "away": "Hillingdon Stags",
       "venue": "Marble Hill Park",
+      "competition": "Division Three"
+    },
+    {
+      "date": "2026-10-25",
+      "kickoff": "10:30 AM",
+      "home": "Whitton Wanderers Reserves",
+      "away": "Hillingdon Stags",
+      "venue": "Whitton Park Sports Association",
       "competition": "Division Three"
     }
   ]
