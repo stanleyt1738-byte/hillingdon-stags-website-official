@@ -41,7 +41,15 @@ const PAGES = {
 
 async function fetchHtml(url) {
   const res = await fetch(url, {
-    headers: { "User-Agent": "HillingdonStagsBot/1.0 (+https://github.com/hillingdon-stags)" }
+    headers: {
+      // A custom bot UA is a strong tell for datacenter-IP bot filtering —
+      // GitHub Actions runners have been silently blocked since 2026-09-15
+      // (see incident note below); a browser-like UA is worth trying since
+      // it's free and the actual runner IP can't be changed.
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+      "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+      "Accept-Language": "en-GB,en;q=0.9"
+    }
   });
   if (!res.ok) throw new Error(`HTTP ${res.status} on ${url}`);
   return await res.text();
@@ -229,6 +237,7 @@ async function saveJson(filename, payload) {
 /* --------- Main --------- */
 async function main() {
   const now = new Date().toISOString();
+  let blocked = false;
 
   // 1. League table
   try {
@@ -245,9 +254,11 @@ async function main() {
       console.log(`League table: ${table.length} teams`);
     } else {
       console.warn("League table: no rows parsed");
+      blocked = true;
     }
   } catch (e) {
     console.warn("Table page failed:", e.message);
+    blocked = true;
   }
 
   // 2. Fixtures and results — swept month by month across the whole season
@@ -279,6 +290,7 @@ async function main() {
   // don't let that silently wipe out good data (see incident 2026-09-15).
   if (allFixtures.length === 0 && allResults.length === 0 && hadPreviousData) {
     console.warn("Fixtures/results sweep returned nothing but previous data exists — skipping write to avoid wiping good data.");
+    blocked = true;
   } else {
     const mergedResults = mergeResults(allResults, previousResults?.results);
 
@@ -296,6 +308,13 @@ async function main() {
   }
 
   console.log("Done.");
+
+  if (blocked) {
+    // Exit non-zero so the Actions run shows red and GitHub emails the repo
+    // owner, instead of quietly no-op'ing (see incident 2026-09-15 to
+    // 2026-09-21, where six days of "success" runs masked a frozen site).
+    throw new Error("Scrape returned nothing for the table or fixtures/results — likely blocked by Mitoo (see console warnings above). Data files were left untouched.");
+  }
 }
 
 main().catch(err => {
