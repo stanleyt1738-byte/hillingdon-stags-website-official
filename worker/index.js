@@ -16,6 +16,7 @@
    ============================================================ */
 
 import { scrapeAll } from "./scrape.js";
+import { syncToGithub } from "./github-sync.js";
 
 // The three files the scraper owns. Everything else under /data/
 // (squad, sponsors, club, gallery, videos…) is hand-maintained and
@@ -90,6 +91,14 @@ async function refresh(env) {
     written.push(name);
   }
 
+  // Keep the repo's data/*.json in sync with what the live site is serving,
+  // so `git log` and GitHub always show current results — not just KV.
+  const github = await syncToGithub(
+    env,
+    writes.map(([name, payload]) => ({ name, payload })),
+    (m) => logs.push(m)
+  );
+
   const status = {
     lastRun: new Date().toISOString(),
     ok: !out.blocked && written.length > 0,
@@ -100,6 +109,7 @@ async function refresh(env) {
       fixtures: out.fixtures?.fixtures?.length ?? null,
       results: out.results?.results?.length ?? null
     },
+    github,
     logs,
     warnings: out.warnings
   };
