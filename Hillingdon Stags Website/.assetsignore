@@ -1,0 +1,3 @@
+# Not part of the site — the local Node scraper and its deps.
+scraper/
+.DS_Store

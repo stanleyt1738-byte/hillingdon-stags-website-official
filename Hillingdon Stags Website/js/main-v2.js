@@ -152,7 +152,12 @@ function parseCSV(text) {
 async function loadCSV(url) {
   if (!url) return [];
   try {
-    const res = await fetch(url);
+    // Google serves published CSVs with `max-age=300`, so without this a row
+    // added to the sheet can take five minutes to show up. The buster changes
+    // once a minute rather than every request, so pages still share a cached
+    // copy while you click around the site.
+    const bust = `${url}${url.includes("?") ? "&" : "?"}_cb=${Math.floor(Date.now() / 60000)}`;
+    const res = await fetch(bust);
     if (!res.ok) throw new Error(`Failed to load ${url}: ${res.status}`);
     return parseCSV(await res.text());
   } catch (e) {

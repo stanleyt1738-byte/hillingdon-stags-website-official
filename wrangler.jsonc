@@ -1,0 +1,42 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "hillingdon-stags-website-official",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-09-29",
+  "observability": { "enabled": true },
+
+  // The site itself. `run_worker_first` lets the Worker answer /data/*.json
+  // from KV; every other path is served straight from these files.
+  "assets": {
+    "directory": "Hillingdon Stags Website",
+    "binding": "ASSETS",
+    "run_worker_first": ["/data/*"]
+  },
+
+  // Where the Sunday cron writes the freshly scraped table/fixtures/results.
+  "kv_namespaces": [
+    {
+      "binding": "STAGS_DATA",
+      "id": "b3cbd6430dc84dd9a2008f5601be1c16"
+    }
+  ],
+
+  // Mitoo publishes the weekend's results on Sunday evening.
+  //
+  // Deliberately ONE cron string, because the Workers Free plan allows only
+  // five cron triggers across the whole account and Stanley's other projects
+  // use the rest. A list in the hour/day fields costs nothing extra, so this
+  // single trigger fires four times:
+  //   19:00 UTC = 8pm BST (late Mar – late Oct)
+  //   20:00 UTC = 8pm GMT (late Oct – late Mar)
+  // — so one of the two Sunday runs is always 8pm UK whatever the clocks are
+  // doing, and the other is a free retry an hour either side. The Monday pair
+  // catches anything Mitoo published late. A refresh is idempotent, and a run
+  // that comes back empty leaves the existing data alone.
+  //
+  // Day-of-week is named, not numeric: Cloudflare numbers days 1-7 and
+  // rejects `0` for Sunday.
+  "triggers": {
+    "crons": ["0 19,20 * * SUN,MON"]
+  }
+}
