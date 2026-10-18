@@ -332,10 +332,11 @@ function renderLastResult(slot, results) {
     <div class="meta">${fmtDate(r.date, { weekday: "long" })}</div>
     <div class="match-row">
       <span class="home ${isStags(r.home) ? "is-stags" : ""}">${r.home}</span>
-      <span class="score">${r.homeGoals}&ndash;${r.awayGoals}</span>
+      <span class="score">${r.homeGoals === null ? "Awarded" : `${r.homeGoals}&ndash;${r.awayGoals}`}</span>
       <span class="away ${isStags(r.away) ? "is-stags" : ""}">${r.away}</span>
     </div>
     <div class="meta">
+      ${r.note ? `<em>${r.note}</em> ` : ""}
       ${r.scorers && r.scorers.length ? "&#9917; " + r.scorers.join(", ") : ""}
       ${r.motm ? " &middot; MOTM: " + r.motm : ""}
     </div>
@@ -385,14 +386,9 @@ function renderForm(slot, results) {
     slot.innerHTML = `<span class="muted">No results yet this season.</span>`;
     return;
   }
-  const last5 = results.slice(0, 5).map(r => {
-    const stagsHome = isStags(r.home);
-    const ours = stagsHome ? r.homeGoals : r.awayGoals;
-    const theirs = stagsHome ? r.awayGoals : r.homeGoals;
-    if (ours > theirs) return "W";
-    if (ours < theirs) return "L";
-    return "D";
-  });
+  // resultClass understands awarded games, which have no goals to compare.
+  const FORM = { "result-win": "W", "result-loss": "L", "result-draw": "D" };
+  const last5 = results.slice(0, 5).map(r => FORM[resultClass(r)]).filter(Boolean);
   slot.innerHTML = last5.map(c => `<span class="form-chip ${c}">${c}</span>`).join("") +
     `<span class="muted" style="margin-left: 12px; font-size: 0.85rem;">Last 5 results &mdash; auto-updates from Mitoo</span>`;
 }

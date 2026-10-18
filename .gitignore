@@ -4,3 +4,6 @@ node_modules/
 
 # Local secret for the /data/_refresh "update now" endpoint — never commit.
 .refresh-token.local
+
+# Local secret for the /data/_ingest relay endpoint (relay/mitoo-relay.gs) — never commit.
+.ingest-token.local

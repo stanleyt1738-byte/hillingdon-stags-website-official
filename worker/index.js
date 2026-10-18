@@ -8,6 +8,11 @@
    2. scheduled() — Sunday evening cron: scrapes Mitoo and writes
                     the fresh JSON into KV. No deploy, no GitHub
                     Action, no LLM involved.
+   3. /data/_ingest — the same refresh, but with the Mitoo pages
+                    handed in by a Google Apps Script relay. Mitoo
+                    started 403ing Cloudflare Workers in Oct 2026
+                    (GitHub Actions since Sep), while Google's
+                    servers still get through. See relay/.
 
    Why KV rather than committing to the repo: the site is a Workers
    static-assets deployment, so anything baked in only reaches the
@@ -15,7 +20,7 @@
    the cron alone is enough to update the site.
    ============================================================ */
 
-import { scrapeAll } from "./scrape.js";
+import { scrapeAll, ALL_URLS } from "./scrape.js";
 import { syncToGithub } from "./github-sync.js";
 
 // The three files the scraper owns. Everything else under /data/
@@ -61,7 +66,7 @@ async function readAsset(env, name) {
   }
 }
 
-async function refresh(env) {
+async function refresh(env, { fetchHtml, via = "cron" } = {}) {
   const assetResults = await readAsset(env, "results.json");
 
   let kvResults = null;
@@ -78,7 +83,7 @@ async function refresh(env) {
   ];
 
   const logs = [];
-  const out = await scrapeAll({ previousResults, log: (m) => logs.push(m) });
+  const out = await scrapeAll({ previousResults, log: (m) => logs.push(m), fetchHtml });
 
   const written = [];
   const writes = [];
@@ -101,6 +106,7 @@ async function refresh(env) {
 
   const status = {
     lastRun: new Date().toISOString(),
+    via,
     ok: !out.blocked && written.length > 0,
     blocked: out.blocked,
     written,
@@ -146,6 +152,38 @@ export default {
           return json({ error: "Bad or missing token." }, { status: 403, maxAge: 0 });
         }
         return json(await refresh(env), { maxAge: 0 });
+      }
+
+      // Relay endpoint. GET returns the pages to fetch; POST takes
+      // { pages: { url: html } } and runs a normal refresh over them.
+      // Separate secret from REFRESH_TOKEN because this one can feed the
+      // site arbitrary HTML, not just ask for a re-scrape.
+      if (name === "_ingest") {
+        const expected = env.INGEST_TOKEN;
+        if (!expected) return json({ error: "Ingest is not enabled." }, { status: 404, maxAge: 0 });
+        if (url.searchParams.get("token") !== expected) {
+          return json({ error: "Bad or missing token." }, { status: 403, maxAge: 0 });
+        }
+        if (request.method === "GET") return json({ urls: ALL_URLS }, { maxAge: 0 });
+        if (request.method !== "POST") return json({ error: "Use GET or POST." }, { status: 405, maxAge: 0 });
+
+        let pages;
+        try {
+          ({ pages } = await request.json());
+        } catch {
+          return json({ error: "Body must be JSON: { pages: { url: html } }" }, { status: 400, maxAge: 0 });
+        }
+        if (!pages || typeof pages !== "object") {
+          return json({ error: "Body must be JSON: { pages: { url: html } }" }, { status: 400, maxAge: 0 });
+        }
+
+        // A page the relay couldn't get counts as a failed fetch, so the usual
+        // blocked/empty guards in scrapeAll still apply.
+        const fetchHtml = async (u) => {
+          if (typeof pages[u] !== "string") throw new Error(`relay did not supply ${u}`);
+          return pages[u];
+        };
+        return json(await refresh(env, { fetchHtml, via: "relay" }), { maxAge: 0 });
       }
 
       if (LIVE_DATA.has(name)) {

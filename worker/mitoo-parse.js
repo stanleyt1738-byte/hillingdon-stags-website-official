@@ -200,6 +200,12 @@ export function parseUKDate(str, seasonStartYear) {
 
    Rows are walked in document order, tracking the most recent
    date header; only rows involving `teamName` are kept.
+
+   Awarded games (walkovers) show "-" and "H"/"A" in the score cells
+   plus a <span class="pix13boldnavy">[ Away Win was awarded ]</span>.
+   They're results, not fixtures. The secretary's note sometimes
+   records the actual score ("... score 1-7"); otherwise goals are null,
+   which the front end shows as "Awarded".
 */
 export function parseFixtResMonth(html, { teamName, seasonStartYear, competition }) {
   const fixtures = [];
@@ -244,7 +250,7 @@ export function parseFixtResMonth(html, { teamName, seasonStartYear, competition
       } else if (t.name === "tr" && rowDepth < 0 && hasClass(t.attrs, "bg_contrast")) {
         rowDepth = depth;
         rowText = "";
-        row = { scores: [], teams: [], venue: null };
+        row = { scores: [], teams: [], venue: null, award: null };
       } else if (t.name === "td" && rowDepth >= 0 && tdDepth < 0) {
         tdDepth = depth;
         tdIsScore = String(t.attrs.width || "").trim() === "35";
@@ -265,6 +271,9 @@ export function parseFixtResMonth(html, { teamName, seasonStartYear, competition
       if (hasClass({ class: spanClass }, "pix13bold")) {
         if (spanIsScoreCell) row?.scores.push(value);
         else if (row && row.teams.length < 2) row.teams.push(value);
+      } else if (hasClass({ class: spanClass }, "pix13boldnavy")) {
+        const award = value.match(/(home|away)\s+win\s+was\s+awarded/i);
+        if (row && award) row.award = award[1].toLowerCase();
       } else if (hasClass({ class: spanClass }, "pix10navy")) {
         if (row && row.venue === null) row.venue = value;
       }
@@ -291,7 +300,21 @@ export function parseFixtResMonth(html, { teamName, seasonStartYear, competition
         const awayGoals = captured.scores[1] ?? "";
         const venue = captured.venue || "";
 
-        if (homeGoals !== "" && awayGoals !== "" &&
+        if (captured.award) {
+          const noted = clean(text).match(/\bscore\s+(\d+)\s*-\s*(\d+)/i);
+          results.push({
+            date: currentDate,
+            competition,
+            home,
+            homeGoals: noted ? parseInt(noted[1], 10) : null,
+            away,
+            awayGoals: noted ? parseInt(noted[2], 10) : null,
+            venue,
+            note: `${captured.award === "home" ? "Home" : "Away"} win awarded`,
+            scorers: [],
+            motm: null
+          });
+        } else if (homeGoals !== "" && awayGoals !== "" &&
             Number.isFinite(parseInt(homeGoals, 10)) && Number.isFinite(parseInt(awayGoals, 10))) {
           results.push({
             date: currentDate,

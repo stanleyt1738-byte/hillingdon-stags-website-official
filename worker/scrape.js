@@ -35,7 +35,11 @@ const monthUrl = (m) =>
 export const MONTH_SOURCE =
   `${BASE}/FixtResMonth.cfm?TblName=Matches&DivisionID=${DIVISION_ID}&LeagueCode=${LEAGUE_CODE}&MonthNo={8..12,1..5}`;
 
-async function fetchHtml(url) {
+// Every Mitoo page a full refresh reads. The Apps Script relay asks the Worker
+// for this list, so a new season only means editing the constants above.
+export const ALL_URLS = [TABLE_URL, ...SEASON_MONTHS.map(monthUrl)];
+
+async function defaultFetchHtml(url) {
   const res = await fetch(url, {
     headers: {
       // Mitoo rejects obvious bot traffic from datacenter IPs — GitHub Actions
@@ -77,11 +81,13 @@ export function mergeResults(freshResults, previousResults) {
  * @param {Array}  opts.previousResults  results array from the last known-good
  *                                       data, so manual extras survive.
  * @param {(msg: string) => void} [opts.log]
+ * @param {(url: string) => Promise<string>} [opts.fetchHtml]  defaults to a
+ *                                       live fetch; the relay passes pages in.
  * @returns {Promise<{table, fixtures, results, blocked, warnings}>}
  *   `blocked` is true when Mitoo returned nothing usable — the caller must then
  *   leave existing data untouched rather than publishing empties.
  */
-export async function scrapeAll({ previousResults = [], log = () => {} } = {}) {
+export async function scrapeAll({ previousResults = [], log = () => {}, fetchHtml = defaultFetchHtml } = {}) {
   const warnings = [];
   const now = new Date().toISOString();
   let tableBlocked = false;
