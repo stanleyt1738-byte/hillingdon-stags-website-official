@@ -1,7 +1,18 @@
 {
-  "lastUpdated": "2026-09-29T11:52:43.267Z",
+  "lastUpdated": "2026-10-18T22:24:54.460Z",
   "source": "https://www.mitoofootball.com/FixtResMonth.cfm?TblName=Matches&DivisionID=4&LeagueCode=MDXS2026&MonthNo={8..12,1..5}",
   "results": [
+    {
+      "date": "2026-10-11",
+      "competition": "Division Three",
+      "home": "Moor Mead",
+      "homeGoals": 3,
+      "away": "Hillingdon Stags",
+      "awayGoals": 3,
+      "venue": "Marble Hill Park",
+      "scorers": [],
+      "motm": null
+    },
     {
       "date": "2026-09-27",
       "competition": "Division Three",
@@ -10,17 +21,6 @@
       "away": "Jugg Boyz",
       "awayGoals": 0,
       "venue": "Coney Green",
-      "scorers": [],
-      "motm": null
-    },
-    {
-      "date": "2026-09-20",
-      "competition": "Division Three",
-      "home": "London Tigers",
-      "homeGoals": 1,
-      "away": "Hillingdon Stags",
-      "awayGoals": 7,
-      "venue": "London Tigers Sports Complex",
       "scorers": [],
       "motm": null
     },
