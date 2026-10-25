@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-18T22:31:37.149Z",
+  "lastUpdated": "2026-10-25T11:10:15.443Z",
   "source": "https://www.mitoofootball.com/FixtResMonth.cfm?TblName=Matches&DivisionID=4&LeagueCode=MDXS2026&MonthNo={8..12,1..5}",
   "fixtures": [
     {
@@ -8,22 +8,6 @@
       "home": "Whitton Wanderers Reserves",
       "away": "Hillingdon Stags",
       "venue": "Whitton Park Sports Association",
-      "competition": "Division Three"
-    },
-    {
-      "date": "2026-11-01",
-      "kickoff": "10:30 AM",
-      "home": "Richmond Saints",
-      "away": "Hillingdon Stags",
-      "venue": "Bedfont Football & Social Club",
-      "competition": "Division Three"
-    },
-    {
-      "date": "2026-11-08",
-      "kickoff": "10:30 AM",
-      "home": "SNM",
-      "away": "Hillingdon Stags",
-      "venue": "Cranford Community College",
       "competition": "Division Three"
     }
   ]
