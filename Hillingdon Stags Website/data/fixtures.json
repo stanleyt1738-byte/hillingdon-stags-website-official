@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-01T21:01:44.712Z",
+  "lastUpdated": "2026-11-04T17:10:17.050Z",
   "source": "https://www.mitoofootball.com/FixtResMonth.cfm?TblName=Matches&DivisionID=4&LeagueCode=MDXS2026&MonthNo={8..12,1..5}",
   "fixtures": [
     {
@@ -21,9 +21,9 @@
     {
       "date": "2026-11-22",
       "kickoff": "10:30 AM",
-      "home": "Whitton Wanderers Reserves",
+      "home": "Jugg Boyz",
       "away": "Hillingdon Stags",
-      "venue": "Whitton Park Sports Association",
+      "venue": "Cranford Community College",
       "competition": "Division Three"
     },
     {
