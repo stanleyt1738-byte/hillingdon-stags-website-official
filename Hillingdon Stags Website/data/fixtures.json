@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-04T17:10:17.050Z",
+  "lastUpdated": "2026-11-06T09:04:08.051Z",
   "source": "https://www.mitoofootball.com/FixtResMonth.cfm?TblName=Matches&DivisionID=4&LeagueCode=MDXS2026&MonthNo={8..12,1..5}",
   "fixtures": [
     {
@@ -24,14 +24,6 @@
       "home": "Jugg Boyz",
       "away": "Hillingdon Stags",
       "venue": "Cranford Community College",
-      "competition": "Division Three"
-    },
-    {
-      "date": "2026-12-06",
-      "kickoff": "10:30 AM",
-      "home": "Hillingdon Stags",
-      "away": "London Tigers",
-      "venue": "Coney Green",
       "competition": "Division Three"
     }
   ]
